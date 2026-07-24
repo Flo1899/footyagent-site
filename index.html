@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FootyAgent — Be the agent behind the stars</title>
+<meta name="description" content="FootyAgent is a football agent simulation for iPhone: scout talents, win negotiations, broker transfers and build your agency into a worldwide power.">
+<style>
+  :root {
+    --nacht: #0d1117; --panel: #161d29; --linie: rgba(255,255,255,.08);
+    --neon: #4ade80; --neon-dunkel: #14532d; --gold: #fbbf24;
+    --text: #e7ecf3; --sekundaer: #9aa7b8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(1200px 600px at 50% -10%, #16324a 0%, var(--nacht) 55%);
+    color: var(--text); line-height: 1.6; min-height: 100vh;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 48px 20px 64px; }
+  header { text-align: center; padding: 40px 0 8px; }
+  .ball { font-size: 72px; display: block; }
+  h1 { font-size: 2.6rem; font-weight: 900; letter-spacing: -0.5px; margin-top: 8px; }
+  h1 .fa { color: var(--neon); }
+  .tagline { font-size: 1.2rem; color: var(--sekundaer); margin: 10px auto 0; max-width: 560px; }
+  .badge {
+    display: inline-block; margin-top: 26px; padding: 12px 22px; border-radius: 14px;
+    background: var(--panel); border: 1px solid var(--linie); color: var(--gold);
+    font-weight: 700; letter-spacing: .3px;
+  }
+  section { margin-top: 56px; }
+  h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 16px; }
+  h2 .dot { color: var(--neon); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--linie); border-radius: 16px;
+    padding: 18px;
+  }
+  .card b { display: block; margin-bottom: 4px; font-size: 1.02rem; }
+  .card span { color: var(--sekundaer); font-size: .95rem; }
+  .de { border-left: 3px solid var(--neon); padding-left: 16px; color: var(--sekundaer); }
+  a { color: var(--neon); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .support { background: var(--panel); border: 1px solid var(--linie); border-radius: 16px; padding: 22px; }
+  .fill { background: rgba(251,191,36,.15); padding: 0 5px; border-radius: 4px; font-weight: 600; }
+  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--linie);
+           color: var(--sekundaer); font-size: .9rem; display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="ball">⚽️</span>
+  <h1>Footy<span class="fa">Agent</span></h1>
+  <p class="tagline">Not the manager. Not the player. <b>The agent.</b><br>
+     Scout talents, win negotiations, broker transfers — and build your agency into a worldwide power.</p>
+  <div class="badge">🚀 Coming soon to the App&nbsp;Store</div>
+</header>
+
+<section>
+  <h2><span class="dot">●</span> What you'll do</h2>
+  <div class="grid">
+    <div class="card"><b>🔎 Scout raw talent</b><span>Find tomorrow's stars across 15 nations and hundreds of clubs — before your rivals do.</span></div>
+    <div class="card"><b>💬 Win real negotiations</b><span>Every deal hides a pain threshold. Push too hard and clubs walk away.</span></div>
+    <div class="card"><b>🤝 Broker transfers</b><span>Cash in on every move: transfer fees, salary cuts, loan fees, sponsor deals.</span></div>
+    <div class="card"><b>🏢 Build your agency</b><span>Hire scouts, analysts and lawyers. Climb 5 prestige tiers to worldwide fame.</span></div>
+    <div class="card"><b>👑 Become club president</b><span>Buy shares, take majority control, set the strategy — and collect the dividends.</span></div>
+    <div class="card"><b>📴 Relaxed &amp; offline</b><span>A single-player management sim. No timers, no internet required, no ads.</span></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="dot">●</span> Auf Deutsch</h2>
+  <p class="de">FootyAgent ist eine Spielerberater-Simulation fürs iPhone: Entdecke Talente,
+  gewinne echte Verhandlungen, vermittle Transfers und baue deine Agentur vom lokalen Büro zur
+  Weltmacht aus. Komplett auf Deutsch und Englisch spielbar — offline, ohne Timer, ohne Werbung.</p>
+</section>
+
+<section id="support">
+  <h2><span class="dot">●</span> Support</h2>
+  <div class="support">
+    <p>Questions, feedback or a bug to report? / Fragen, Feedback oder einen Fehler gefunden?</p>
+    <p style="margin-top:8px">📧 <a href="mailto:support@footyagent.de">support@footyagent.de</a></p>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Florian Schlauf · FootyAgent</span>
+  <span><a href="/datenschutz/">Datenschutz &amp; Impressum</a></span>
+</footer>
+
+</div>
+</body>
+</html>
