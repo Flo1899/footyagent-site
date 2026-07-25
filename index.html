@@ -1,95 +1,596 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de" data-lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FootyAgent — Be the agent behind the stars</title>
-<meta name="description" content="FootyAgent is a football agent simulation for iPhone: scout talents, win negotiations, broker transfers and build your agency into a worldwide power.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FootyAgent — Werde der Berater hinter den Stars</title>
+<meta name="description" content="FootyAgent ist eine Spielerberater-Simulation fürs iPhone: Talente scouten, Verhandlungen gewinnen, Transfers einfädeln und deine Agentur zur Weltmacht ausbauen. Offline, ohne Werbung, ohne Timer.">
+<meta name="theme-color" content="#060D14">
+<link rel="icon" href="assets/favicon.png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="FootyAgent — Werde der Berater hinter den Stars">
+<meta property="og:description" content="Spielerberater-Simulation fürs iPhone. Scoute Talente, gewinne Verhandlungen, baue deine Agentur auf. Offline, ohne Werbung.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://footyagent.app">
+<meta property="og:image" content="https://footyagent.app/assets/apple-touch-icon.png">
+<meta name="twitter:card" content="summary_large_image">
 <style>
-  :root {
-    --nacht: #0d1117; --panel: #161d29; --linie: rgba(255,255,255,.08);
-    --neon: #4ade80; --neon-dunkel: #14532d; --gold: #fbbf24;
-    --text: #e7ecf3; --sekundaer: #9aa7b8;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: radial-gradient(1200px 600px at 50% -10%, #16324a 0%, var(--nacht) 55%);
-    color: var(--text); line-height: 1.6; min-height: 100vh;
-  }
-  .wrap { max-width: 860px; margin: 0 auto; padding: 48px 20px 64px; }
-  header { text-align: center; padding: 40px 0 8px; }
-  .ball { font-size: 72px; display: block; }
-  h1 { font-size: 2.6rem; font-weight: 900; letter-spacing: -0.5px; margin-top: 8px; }
-  h1 .fa { color: var(--neon); }
-  .tagline { font-size: 1.2rem; color: var(--sekundaer); margin: 10px auto 0; max-width: 560px; }
-  .badge {
-    display: inline-block; margin-top: 26px; padding: 12px 22px; border-radius: 14px;
-    background: var(--panel); border: 1px solid var(--linie); color: var(--gold);
-    font-weight: 700; letter-spacing: .3px;
-  }
-  section { margin-top: 56px; }
-  h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 16px; }
-  h2 .dot { color: var(--neon); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-  .card {
-    background: var(--panel); border: 1px solid var(--linie); border-radius: 16px;
-    padding: 18px;
-  }
-  .card b { display: block; margin-bottom: 4px; font-size: 1.02rem; }
-  .card span { color: var(--sekundaer); font-size: .95rem; }
-  .de { border-left: 3px solid var(--neon); padding-left: 16px; color: var(--sekundaer); }
-  a { color: var(--neon); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .support { background: var(--panel); border: 1px solid var(--linie); border-radius: 16px; padding: 22px; }
-  .fill { background: rgba(251,191,36,.15); padding: 0 5px; border-radius: 4px; font-weight: 600; }
-  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--linie);
-           color: var(--sekundaer); font-size: .9rem; display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; }
+/* ============================================================
+   FootyAgent — Landingpage
+   Design = »Flutlicht-Nacht«, die Bühne aus dem Spiel selbst:
+   Nachthimmel oben, Rasen mit Mähstreifen unten, Flutlichtkegel
+   aus den oberen Ecken, Mittelkreis am Anstoßpunkt.
+   Farbwerte 1:1 aus Theme.swift. Keine externen Ressourcen
+   (auch keine Google Fonts – DSGVO!), alles inline.
+   ============================================================ */
+
+:root{
+  /* Bühne */
+  --buehne-oben:#060D14; --buehne-mitte:#08151F;
+  --rasen-dunkel:#0B2B1D; --rasen-hell:#124928;
+  --nacht:#0B101F;
+  /* Akzente */
+  --aktion:#2FD077; --neon:#2EE6A8; --gold:#FFD76A;
+  --text:#E8ECFF; --text-sek:#8F9AC7;
+  /* Glas */
+  --glas:rgba(13,26,40,.74); --glas-linie:rgba(130,160,220,.20);
+  --glas-innen:rgba(32,48,74,.60);
+  --radius:18px;
+  --seite:min(1120px,92vw);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+/* overflow-x:clip statt hidden – verhindert seitliches Wegschieben, ohne (anders als
+   hidden) einen Scroll-Container zu erzeugen, der position:sticky im Kopf brechen würde. */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--text);line-height:1.6;background:var(--buehne-oben);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+
+/* ---------- Die Stadion-Bühne (fest hinter allem) ----------
+   BEWUSST ohne filter:blur() – zwei großflächig geblurrte Kegel kosteten pro
+   Frame so viel GPU, dass das Scrollen hakte. Die Flutlichter sind jetzt weiche
+   Radial-Verläufe direkt in der Hintergrund-Ebene: gleiche Optik, ~0 Kosten. */
+.buehne{position:fixed;inset:0;z-index:-1;overflow:hidden;
+  background:
+    radial-gradient(58vw 74vh at 13% -10%, rgba(214,232,255,.115), transparent 60%),
+    radial-gradient(58vw 74vh at 87% -10%, rgba(214,232,255,.115), transparent 60%),
+    linear-gradient(180deg,
+      var(--buehne-oben) 0%, var(--buehne-mitte) 42%,
+      var(--rasen-dunkel) 74%, var(--rasen-hell) 100%);}
+/* Mähstreifen im Rasen: Verlauf statt Maske (eine Ebene weniger zu komponieren) */
+.rasen{position:absolute;left:-10%;right:-10%;bottom:0;height:40vh;opacity:.5;
+  background:repeating-linear-gradient(90deg,
+    rgba(255,255,255,.055) 0 9%, rgba(255,255,255,0) 9% 18%);}
+.rasen::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,var(--rasen-dunkel),transparent 45%)}
+/* Mittellinie + Mittelkreis: wir stehen am Anstoßpunkt */
+.mittellinie{position:absolute;left:0;right:0;bottom:70px;height:1px;background:rgba(255,255,255,.13)}
+.mittelkreis{position:absolute;left:50%;bottom:-14vh;width:min(94vw,900px);height:34vh;
+  transform:translateX(-50%);border:2px solid rgba(255,255,255,.15);border-radius:50%}
+
+/* Sprachumschaltung steht am ENDE des Stylesheets (Spezifität!) – siehe unten. */
+
+/* ---------- Kopfleiste ---------- */
+/* Deckende Leiste statt backdrop-filter: der Weichzeichner musste bei jedem
+   Scroll-Frame den Untergrund neu filtern – hier nicht die Kosten wert. */
+header.top{position:sticky;top:0;z-index:50;
+  background:rgba(5,11,17,.94);border-bottom:1px solid rgba(130,160,220,.12)}
+.top-in{width:var(--seite);margin:0 auto;display:flex;align-items:center;gap:14px;padding:11px 0}
+.marke{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.2px;font-size:1.05rem}
+.marke img{width:30px;height:30px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.5)}
+.marke .gruen{color:var(--aktion)}
+.top-rechts{margin-left:auto;display:flex;align-items:center;gap:10px}
+/* Sprach-Pillen */
+.sprache{display:flex;background:var(--glas-innen);border:1px solid var(--glas-linie);
+  border-radius:999px;padding:3px;gap:2px}
+.sprache button{border:0;background:transparent;color:var(--text-sek);font:inherit;font-size:.8rem;
+  font-weight:800;padding:5px 12px;border-radius:999px;cursor:pointer;letter-spacing:.4px}
+.sprache button[aria-pressed="true"]{background:var(--aktion);color:#04220F}
+.sprache button:focus-visible,.knopf:focus-visible,a:focus-visible{outline:2px solid var(--neon);outline-offset:3px}
+
+/* ---------- Basisbausteine ---------- */
+.seite{width:var(--seite);margin:0 auto}
+section{padding:clamp(56px,9vw,110px) 0}
+.eyebrow{font-size:.78rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--neon);margin-bottom:14px}
+h1{font-size:clamp(2.3rem,6.4vw,4.1rem);line-height:1.03;font-weight:900;letter-spacing:-1.8px}
+h2{font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.12;font-weight:900;letter-spacing:-1px}
+h3{font-size:1.06rem;font-weight:800;letter-spacing:-.2px}
+.lead{font-size:clamp(1.02rem,1.6vw,1.18rem);color:var(--text-sek);max-width:52ch}
+.glas{background:var(--glas);border:1px solid var(--glas-linie);border-radius:var(--radius)}
+
+/* ---------- Hero ---------- */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center;
+  padding-top:clamp(38px,6vw,74px);padding-bottom:clamp(30px,5vw,60px)}
+h1 .zeile2{display:block;background:linear-gradient(96deg,var(--aktion),var(--neon) 55%,var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{margin-top:20px}
+.cta-reihe{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:30px}
+/* App-Store-Knopf. Zwei Zustände über body[data-launch] – bei Launch auf "live" stellen. */
+.knopf{display:inline-flex;align-items:center;gap:11px;padding:13px 22px;border-radius:14px;
+  font-weight:800;font-size:1rem;text-decoration:none;border:1px solid transparent;
+  background:linear-gradient(180deg,var(--aktion),#1BA75C);color:#04220F;
+  box-shadow:0 4px 0 #06482A,0 10px 26px rgba(47,208,119,.26);transition:transform .12s,box-shadow .12s}
+.knopf:hover{transform:translateY(-1px);box-shadow:0 5px 0 #06482A,0 14px 30px rgba(47,208,119,.32)}
+.knopf:active{transform:translateY(3px);box-shadow:0 1px 0 #06482A}
+.knopf svg{width:19px;height:19px;fill:currentColor;flex:none}
+.knopf .klein{display:block;font-size:.68rem;font-weight:700;opacity:.72;letter-spacing:.3px;line-height:1}
+.knopf .gross{display:block;font-size:1.02rem;font-weight:900;letter-spacing:-.3px;line-height:1.25}
+[data-launch="soon"] .wenn-live{display:none}
+[data-launch="live"] .wenn-soon{display:none}
+/* Vor dem Launch ist der Knopf ein STATUS, kein Link – deshalb ruhiges Glas statt
+   Aktions-Grün, damit niemand vergeblich klickt. Der Punkt pulst sanft. */
+.knopf.wenn-soon{background:var(--glas);border-color:var(--glas-linie);color:var(--text);
+  box-shadow:none;cursor:default}
+.knopf.wenn-soon:hover{transform:none;box-shadow:none}
+.knopf.wenn-soon .gross{color:var(--gold)}
+.puls{width:8px;height:8px;border-radius:50%;background:var(--aktion);flex:none;
+  box-shadow:0 0 0 0 rgba(47,208,119,.7);animation:pulsen 2.4s ease-out infinite}
+@keyframes pulsen{
+  0%{box-shadow:0 0 0 0 rgba(47,208,119,.55)}
+  70%{box-shadow:0 0 0 11px rgba(47,208,119,0)}
+  100%{box-shadow:0 0 0 0 rgba(47,208,119,0)}}
+.cta-notiz{font-size:.86rem;color:var(--text-sek)}
+.merkmale{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;list-style:none}
+.merkmale li{font-size:.82rem;font-weight:700;color:var(--text-sek);
+  background:var(--glas-innen);border:1px solid var(--glas-linie);border-radius:999px;padding:6px 13px}
+.merkmale li b{color:var(--text)}
+
+/* ---------- iPhone-Rahmen ---------- */
+.phone{position:relative;width:min(300px,74vw);margin-inline:auto;aspect-ratio:1320/2868;
+  background:#05070C;border-radius:15% / 6.9%;padding:2.4%;
+  box-shadow:0 0 0 1.5px rgba(150,175,225,.30),0 2px 2px rgba(255,255,255,.12) inset,
+             0 34px 70px rgba(0,0,0,.62),0 0 90px rgba(47,208,119,.10)}
+.phone img{width:100%;height:100%;display:block;object-fit:cover;border-radius:12.6% / 5.8%;background:#0B101F}
+.phone::after{content:"";position:absolute;top:2.9%;left:50%;transform:translateX(-50%);
+  width:31%;height:2.4%;background:#05070C;border-radius:999px}
+.hero-phone{position:relative}
+.hero-phone .phone{transform:rotate(1.6deg)}
+/* Schwebendes Wappen als Akzent am Hero-Gerät */
+.akzent{position:absolute;right:-4%;top:9%;width:92px;height:auto;z-index:2;
+  filter:drop-shadow(0 14px 28px rgba(0,0,0,.6));
+  -webkit-mask-image:radial-gradient(circle at 50% 46%,#000 58%,transparent 72%);
+  mask-image:radial-gradient(circle at 50% 46%,#000 58%,transparent 72%);
+  animation:schweben 7s ease-in-out infinite}
+.akzent.zwei{right:auto;left:-5%;top:auto;bottom:14%;width:74px;animation-delay:-3.5s}
+@keyframes schweben{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-13px) rotate(4deg)}}
+
+/* ---------- Zahlenleiste ---------- */
+.fakten{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;overflow:hidden;
+  background:var(--glas-linie);border:1px solid var(--glas-linie);border-radius:var(--radius)}
+.fakt{background:rgba(8,17,28,.92);padding:20px 12px;text-align:center}
+.fakt b{display:block;font-size:clamp(1.35rem,2.7vw,1.9rem);font-weight:900;letter-spacing:-1px;
+  color:var(--gold);line-height:1.15}
+.fakt span{font-size:.78rem;color:var(--text-sek);font-weight:700;letter-spacing:.2px}
+
+/* ---------- Feature-Zeilen ---------- */
+.feature{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,5vw,70px);align-items:center;
+  padding:clamp(36px,6vw,72px) 0;position:relative}
+/* Lichtkegel hinter dem Gerät: hebt es vom dunklen Grund ab, so wie das Flutlicht
+   im Spiel auf den Rasen fällt. Reiner Verlauf – kein Filter, kein Scroll-Kosten. */
+.feature .phone{position:relative;z-index:1}
+.feature .phone::before{content:"";position:absolute;left:50%;top:50%;z-index:-1;
+  width:190%;height:118%;transform:translate(-50%,-50%);pointer-events:none;
+  background:radial-gradient(closest-side,rgba(70,120,110,.30),rgba(47,208,119,.07) 45%,transparent 72%)}
+.feature:nth-of-type(even) .feature-text{order:2}
+.feature-text .eyebrow{margin-bottom:10px}
+.feature-text p{color:var(--text-sek);margin-top:14px;max-width:46ch}
+.punkte{list-style:none;margin-top:20px;display:grid;gap:11px}
+.punkte li{display:flex;gap:11px;align-items:flex-start;font-size:.95rem;color:var(--text-sek)}
+.punkte svg{width:17px;height:17px;flex:none;margin-top:4px;fill:var(--aktion)}
+.punkte b{color:var(--text)}
+
+/* ---------- Wappen-Sektion ---------- */
+.wappen-box{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(24px,4vw,52px);
+  align-items:center;padding:clamp(24px,3.4vw,40px)}
+.wappen-box img{width:100%;border-radius:14px;display:block}
+.rang-reihe{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px;list-style:none}
+.rang{font-size:.76rem;font-weight:800;padding:5px 12px;border-radius:999px;letter-spacing:.3px;
+  border:1px solid;background:rgba(255,255,255,.04)}
+.rang.stahl{color:#C8D0E0;border-color:#8792A8}
+.rang.bronze{color:#E8A96A;border-color:#A9662F}
+.rang.silber{color:#DCE4F2;border-color:#9AA6BC}
+.rang.gold{color:#FFD76A;border-color:#B9871F}
+.rang.platin{color:#B9E4FF;border-color:#7C90D8}
+.rang.pro{color:#FFE79A;border-color:#E0A62C;background:rgba(224,166,44,.13)}
+
+/* ---------- »Ohne«-Sektion (Anti-Features) ---------- */
+/* Fest 3 Spalten: bei auto-fit brach die sechste Karte als einsame Zeile um. */
+.ohne{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px}
+@media (max-width:900px){.ohne{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.ohne{grid-template-columns:1fr}}
+.ohne div{padding:18px;border-radius:14px;background:var(--glas);border:1px solid var(--glas-linie)}
+.ohne b{display:flex;align-items:center;gap:8px;font-size:.98rem}
+.ohne b::before{content:"";width:17px;height:17px;flex:none;border-radius:50%;
+  background:rgba(255,90,90,.16);border:1.5px solid rgba(255,120,120,.65);
+  box-shadow:inset 0 0 0 2.5px rgba(0,0,0,0)}
+.ohne span{display:block;margin-top:6px;font-size:.88rem;color:var(--text-sek)}
+
+/* ---------- Support ---------- */
+.support-box{padding:clamp(24px,3.4vw,38px);display:flex;flex-wrap:wrap;gap:22px;
+  align-items:center;justify-content:space-between}
+.mail{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:1.06rem;
+  color:var(--neon);text-decoration:none;word-break:break-all}
+.mail:hover{text-decoration:underline}
+
+/* ---------- Fußzeile ---------- */
+footer{border-top:1px solid rgba(130,160,220,.14);margin-top:20px;padding:30px 0 44px;
+  background:rgba(5,10,16,.55)}
+.foot-in{width:var(--seite);margin:0 auto;display:flex;flex-wrap:wrap;gap:14px;
+  justify-content:space-between;align-items:center;color:var(--text-sek);font-size:.88rem}
+.foot-in a{color:var(--text-sek);text-decoration:none;margin-left:18px}
+.foot-in a:first-child{margin-left:0}
+.foot-in a:hover{color:var(--text);text-decoration:underline}
+.foot-links{display:flex;flex-wrap:wrap}
+
+/* ---------- Mobil ---------- */
+@media (max-width:860px){
+  .hero,.feature,.wappen-box{grid-template-columns:1fr}
+  .feature:nth-of-type(even) .feature-text{order:0}
+  .hero{text-align:center;padding-top:26px}
+  .hero .lead,.merkmale{margin-inline:auto}
+  .hero .lead{max-width:38ch}
+  .cta-reihe,.merkmale{justify-content:center}
+  .hero-phone{margin-top:18px}
+  .akzent{width:64px}.akzent.zwei{width:52px}
+  .fakten{grid-template-columns:repeat(2,1fr)}
+  .fakt:last-child{grid-column:1/-1}
+  .feature-text p,.punkte{margin-inline:auto}
+  .feature-text{text-align:center}
+  .punkte li{text-align:left}
+  .wappen-box{text-align:center}
+  .rang-reihe{justify-content:center}
+  .support-box{flex-direction:column;text-align:center}
+}
+@media (max-width:420px){ .top-in{gap:8px} .marke span{font-size:.98rem} }
+
+/* ---------- Sprachumschaltung ----------
+   Bewusst als LETZTE Regel und mit html[…] statt nur [data-lang]: sonst gewinnen
+   spätere Regeln mit gleicher Spezifität (z. B. .knopf .klein{display:block}) und
+   es stünden beide Sprachen gleichzeitig da. */
+html[data-lang="de"] .en,
+html[data-lang="en"] .de{display:none!important}
 </style>
 </head>
-<body>
-<div class="wrap">
 
-<header>
-  <span class="ball">⚽️</span>
-  <h1>Footy<span class="fa">Agent</span></h1>
-  <p class="tagline">Not the manager. Not the player. <b>The agent.</b><br>
-     Scout talents, win negotiations, broker transfers — and build your agency into a worldwide power.</p>
-  <div class="badge">🚀 Coming soon to the App&nbsp;Store</div>
+<body data-launch="soon">
+
+<!-- Die Bühne: Nachthimmel, Flutlicht, Rasen, Mittelkreis -->
+<div class="buehne" aria-hidden="true">
+  <div class="rasen"></div>
+  <div class="mittellinie"></div>
+  <div class="mittelkreis"></div>
+</div>
+
+<header class="top">
+  <div class="top-in">
+    <a class="marke" href="#top" style="text-decoration:none;color:inherit">
+      <img src="assets/icon.webp" alt="" width="30" height="30">
+      <span>Footy<span class="gruen">Agent</span></span>
+    </a>
+    <div class="top-rechts">
+      <div class="sprache" role="group" aria-label="Sprache / Language">
+        <button type="button" data-setlang="de" aria-pressed="true">DE</button>
+        <button type="button" data-setlang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
 </header>
 
-<section>
-  <h2><span class="dot">●</span> What you'll do</h2>
-  <div class="grid">
-    <div class="card"><b>🔎 Scout raw talent</b><span>Find tomorrow's stars across 15 nations and hundreds of clubs — before your rivals do.</span></div>
-    <div class="card"><b>💬 Win real negotiations</b><span>Every deal hides a pain threshold. Push too hard and clubs walk away.</span></div>
-    <div class="card"><b>🤝 Broker transfers</b><span>Cash in on every move: transfer fees, salary cuts, loan fees, sponsor deals.</span></div>
-    <div class="card"><b>🏢 Build your agency</b><span>Hire scouts, analysts and lawyers. Climb 5 prestige tiers to worldwide fame.</span></div>
-    <div class="card"><b>👑 Become club president</b><span>Buy shares, take majority control, set the strategy — and collect the dividends.</span></div>
-    <div class="card"><b>📴 Relaxed &amp; offline</b><span>A single-player management sim. No timers, no internet required, no ads.</span></div>
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<div class="seite">
+<section class="hero">
+  <div>
+    <p class="eyebrow">
+      <span class="de">Spielerberater-Simulation · iPhone</span>
+      <span class="en">Football agent simulation · iPhone</span>
+    </p>
+    <h1>
+      <span class="de">Nicht der Trainer.<span class="zeile2">Der Berater.</span></span>
+      <span class="en">Not the manager.<span class="zeile2">The agent.</span></span>
+    </h1>
+    <p class="lead">
+      <span class="de">Entdecke Talente, bevor es die anderen tun. Führe Verhandlungen, in denen ein Euro
+        zu viel den Deal platzen lässt. Und baue aus einem Ein-Mann-Büro eine weltweite Agentur.</span>
+      <span class="en">Spot talent before your rivals do. Run negotiations where one euro too many kills
+        the deal. And grow a one-desk office into a worldwide agency.</span>
+    </p>
+
+    <div class="cta-reihe">
+      <!-- Vor dem Launch: neutraler Hinweis-Knopf. Nach Freigabe body[data-launch="live"] setzen. -->
+      <span class="knopf wenn-soon">
+        <span class="puls" aria-hidden="true"></span>
+        <span>
+          <span class="klein"><span class="de">Gerade in Apples Prüfung</span><span class="en">Currently in Apple review</span></span>
+          <span class="gross"><span class="de">Bald im App&nbsp;Store</span><span class="en">Soon on the App&nbsp;Store</span></span>
+        </span>
+      </span>
+      <a class="knopf wenn-live" href="https://apps.apple.com/app/id6790972595">
+        <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        <span>
+          <span class="klein de">Laden im</span><span class="klein en">Download on the</span>
+          <span class="gross">App Store</span>
+        </span>
+      </a>
+      <span class="cta-notiz">
+        <span class="de">Kostenlos · iPhone · iOS 17+</span>
+        <span class="en">Free · iPhone · iOS 17+</span>
+      </span>
+    </div>
+
+    <ul class="merkmale">
+      <li><b>0 €</b> <span class="de">Vollversion</span><span class="en">full game</span></li>
+      <li><span class="de">Komplett <b>offline</b></span><span class="en">Fully <b>offline</b></span></li>
+      <li><span class="de">Keine <b>Werbung</b></span><span class="en">No <b>ads</b></span></li>
+      <li><span class="de">Kein <b>Konto</b> nötig</span><span class="en">No <b>account</b> needed</span></li>
+      <li><span class="de">Deutsch &amp; <b>Englisch</b></span><span class="en">German &amp; <b>English</b></span></li>
+    </ul>
+  </div>
+
+  <div class="hero-phone">
+    <img class="akzent" src="assets/wappen-krone.webp" width="196" height="186" alt="" aria-hidden="true">
+    <img class="akzent zwei" src="assets/wappen-pokal.webp" width="196" height="186" alt="" aria-hidden="true">
+    <div class="phone">
+      <img class="de" src="assets/de-01-buero.webp" width="1320" height="2868"
+           alt="FootyAgent Startbildschirm: Kontostand, Postfach, Rangliste und Neuigkeiten der Woche">
+      <img class="en" src="assets/en-01-buero.webp" width="1320" height="2868"
+           alt="FootyAgent home screen: balance, inbox, rankings and this week's news">
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============ ZAHLEN ============ -->
+<div class="seite">
+  <div class="fakten">
+    <div class="fakt"><b>15</b><span class="de">Nationen</span><span class="en">nations</span></div>
+    <div class="fakt"><b>100+</b><span class="de">Vereine</span><span class="en">clubs</span></div>
+    <div class="fakt"><b>24</b><span class="de">Wappen</span><span class="en">crests</span></div>
+    <div class="fakt"><b>45</b><span class="de">Erfolge</span><span class="en">achievements</span></div>
+    <div class="fakt"><b>0</b><span class="de">Werbung &amp; Timer</span><span class="en">ads &amp; timers</span></div>
+  </div>
+</div>
+
+<!-- ============ FEATURES ============ -->
+<div class="seite">
+
+<section class="feature">
+  <div class="feature-text">
+    <p class="eyebrow"><span class="de">Die Verhandlung</span><span class="en">The negotiation</span></p>
+    <h2><span class="de">Jeder Deal hat eine Schmerzgrenze</span>
+        <span class="en">Every deal has a breaking point</span></h2>
+    <p><span class="de">Vereine haben ein Budget, Spieler haben Erwartungen — und beide sagen dir
+      nicht, wo genau ihre Grenze liegt. Pokerst du zu hoch, steht der Klub auf und der Transfer ist weg.</span>
+      <span class="en">Clubs have budgets, players have expectations — and neither tells you where the
+      line is. Push too far and the club walks away, taking the transfer with it.</span></p>
+    <ul class="punkte">
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 12.5 2 8.3l1.5-1.5 2.7 2.7L12.5 3 14 4.5z"/></svg>
+        <span><b><span class="de">Echtes Risiko:</span><span class="en">Real risk:</span></b>
+        <span class="de">Gier kann den Klienten den Stammplatz kosten.</span>
+        <span class="en">greed can cost your client his starting spot.</span></span></li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 12.5 2 8.3l1.5-1.5 2.7 2.7L12.5 3 14 4.5z"/></svg>
+        <span><b><span class="de">Drei Stellschrauben:</span><span class="en">Three levers:</span></b>
+        <span class="de">Gehalt, Spielzeit-Rolle und deine Provision.</span>
+        <span class="en">salary, playing-time role and your commission.</span></span></li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 12.5 2 8.3l1.5-1.5 2.7 2.7L12.5 3 14 4.5z"/></svg>
+        <span><b><span class="de">Ruf zählt:</span><span class="en">Reputation counts:</span></b>
+        <span class="de">Wer liefert, bekommt die besseren Anrufe.</span>
+        <span class="en">deliver, and the better calls come to you.</span></span></li>
+    </ul>
+  </div>
+  <div class="phone">
+    <img class="de" loading="lazy" src="assets/de-04-verhandlung.webp" width="1320" height="2868"
+         alt="Verhandlungs-Chat mit einem Verein über Gehalt und Vertragslaufzeit">
+    <img class="en" loading="lazy" src="assets/en-04-verhandlung.webp" width="1320" height="2868"
+         alt="Negotiation chat with a club about salary and contract length">
   </div>
 </section>
 
-<section>
-  <h2><span class="dot">●</span> Auf Deutsch</h2>
-  <p class="de">FootyAgent ist eine Spielerberater-Simulation fürs iPhone: Entdecke Talente,
-  gewinne echte Verhandlungen, vermittle Transfers und baue deine Agentur vom lokalen Büro zur
-  Weltmacht aus. Komplett auf Deutsch und Englisch spielbar — offline, ohne Timer, ohne Werbung.</p>
-</section>
-
-<section id="support">
-  <h2><span class="dot">●</span> Support</h2>
-  <div class="support">
-    <p>Questions, feedback or a bug to report? / Fragen, Feedback oder einen Fehler gefunden?</p>
-    <p style="margin-top:8px">📧 <a href="mailto:support@footyagent.de">support@footyagent.de</a></p>
+<section class="feature">
+  <div class="feature-text">
+    <p class="eyebrow"><span class="de">Deine Klienten</span><span class="en">Your clients</span></p>
+    <h2><span class="de">Aus Rohdiamanten werden Weltstars</span>
+        <span class="en">Turn rough diamonds into world stars</span></h2>
+    <p><span class="de">Jeder Spieler hat Stärke, Potenzial, Form und einen Charakter, der auf deine
+      Entscheidungen reagiert. Wer auf der Bank versauert, verliert — wer spielt, wächst über seine
+      Prognose hinaus.</span>
+      <span class="en">Every player has strength, potential, form and a character that reacts to your
+      decisions. Leave him on the bench and he fades — give him minutes and he can outgrow his own
+      projection.</span></p>
+    <ul class="punkte">
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 12.5 2 8.3l1.5-1.5 2.7 2.7L12.5 3 14 4.5z"/></svg>
+        <span><b><span class="de">Vollständige Historie:</span><span class="en">Full history:</span></b>
+        <span class="de">Transfers, Noten, Titel und Länderspiele.</span>
+        <span class="en">transfers, ratings, titles and caps.</span></span></li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 12.5 2 8.3l1.5-1.5 2.7 2.7L12.5 3 14 4.5z"/></svg>
+        <span><b><span class="de">Beziehung pflegen:</span><span class="en">Keep the bond:</span></b>
+        <span class="de">Vernachlässigte Klienten wechseln die Agentur.</span>
+        <span class="en">neglected clients switch agencies.</span></span></li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 12.5 2 8.3l1.5-1.5 2.7 2.7L12.5 3 14 4.5z"/></svg>
+        <span><b><span class="de">Leihen &amp; Wechsel:</span><span class="en">Loans &amp; moves:</span></b>
+        <span class="de">manchmal ist der kleinere Klub der klügere Schritt.</span>
+        <span class="en">sometimes the smaller club is the smarter move.</span></span></li>
+    </ul>
+  </div>
+  <div class="phone">
+    <img class="de" loading="lazy" src="assets/de-03-spieler-detail.webp" width="1320" height="2868"
+         alt="Spielerprofil mit Stärke, Potenzial, Marktwert und Provisionen">
+    <img class="en" loading="lazy" src="assets/en-03-spieler-detail.webp" width="1320" height="2868"
+         alt="Player profile with strength, potential, market value and commissions">
   </div>
 </section>
 
-<footer>
-  <span>© 2026 Florian Schlauf · FootyAgent</span>
-  <span><a href="/datenschutz/">Datenschutz &amp; Impressum</a></span>
-</footer>
+<section class="feature">
+  <div class="feature-text">
+    <p class="eyebrow"><span class="de">Der Aufstieg</span><span class="en">The climb</span></p>
+    <h2><span class="de">Erst Berater. Dann Präsident.</span>
+        <span class="en">First the agent. Then the president.</span></h2>
+    <p><span class="de">Steck deine Provisionen in Vereinsanteile. Ab 50 % gehört der Klub dir: Du setzt
+      die Strategie, baust Stadion und Jugend aus — und kassierst jede Saison Dividende.</span>
+      <span class="en">Put your commissions into club shares. Past 50 % the club is yours: you set the
+      strategy, upgrade stadium and academy — and collect a dividend every season.</span></p>
+    <ul class="punkte">
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 12.5 2 8.3l1.5-1.5 2.7 2.7L12.5 3 14 4.5z"/></svg>
+        <span><b><span class="de">Vier Strategien:</span><span class="en">Four strategies:</span></b>
+        <span class="de">von Titeljagd bis Sparkurs — mit echten Folgen.</span>
+        <span class="en">from title chase to austerity — with real consequences.</span></span></li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 12.5 2 8.3l1.5-1.5 2.7 2.7L12.5 3 14 4.5z"/></svg>
+        <span><b><span class="de">Auf- und Abstieg:</span><span class="en">Promotion &amp; relegation:</span></b>
+        <span class="de">dein Klub steigt — oder du erklärst es den Fans.</span>
+        <span class="en">your club goes up — or you face the fans.</span></span></li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 12.5 2 8.3l1.5-1.5 2.7 2.7L12.5 3 14 4.5z"/></svg>
+        <span><b><span class="de">Fünf Prestige-Stufen:</span><span class="en">Five prestige tiers:</span></b>
+        <span class="de">vom lokalen Büro zur Weltagentur.</span>
+        <span class="en">from local office to worldwide agency.</span></span></li>
+    </ul>
+  </div>
+  <div class="phone">
+    <img class="de" loading="lazy" src="assets/de-05-mein-verein.webp" width="1320" height="2868"
+         alt="Vereinsführung als Präsident: Infrastruktur ausbauen und Strategie wählen">
+    <img class="en" loading="lazy" src="assets/en-05-mein-verein.webp" width="1320" height="2868"
+         alt="Running your club as president: upgrade infrastructure and pick a strategy">
+  </div>
+</section>
 
 </div>
+
+<!-- ============ WAPPEN ============ -->
+<div class="seite">
+<section>
+  <div class="glas wappen-box">
+    <div>
+      <p class="eyebrow"><span class="de">Sammelbar</span><span class="en">Collectible</span></p>
+      <h2><span class="de">24 Wappen für deine Agentur</span>
+          <span class="en">24 crests for your agency</span></h2>
+      <p class="lead" style="margin-top:14px">
+        <span class="de">Sechs sind von Anfang an dabei. Der Rest hängt an deinen Erfolgen — vom ersten
+          Transfer in Bronze bis zum Platin-Orden für den Berater des Jahres. Dein Wappen steht in der
+          Rangliste neben deinem Namen.</span>
+        <span class="en">Six are yours from the start. The rest are tied to your achievements — from your
+          first transfer in bronze to the platinum order for Agent of the Year. Your crest sits next to
+          your name in the rankings.</span></p>
+      <ul class="rang-reihe">
+        <li class="rang stahl"><span class="de">Stahl</span><span class="en">Steel</span></li>
+        <li class="rang bronze">Bronze</li>
+        <li class="rang silber"><span class="de">Silber</span><span class="en">Silver</span></li>
+        <li class="rang gold">Gold</li>
+        <li class="rang platin"><span class="de">Platin</span><span class="en">Platinum</span></li>
+        <li class="rang pro">Pro</li>
+      </ul>
+    </div>
+    <img loading="lazy" src="assets/wappen.webp" width="1250" height="930"
+         alt="Alle 24 Agentur-Wappen: Medaillen, Schilde, Sechsecke und Orden in Stahl, Bronze, Silber, Gold und Platin">
+  </div>
+</section>
+</div>
+
+<!-- ============ OHNE ============ -->
+<div class="seite">
+<section>
+  <p class="eyebrow"><span class="de">Was du nicht bekommst</span><span class="en">What you won't get</span></p>
+  <h2><span class="de">Ein Spiel, das dich in Ruhe lässt</span>
+      <span class="en">A game that leaves you alone</span></h2>
+  <p class="lead" style="margin-top:14px">
+    <span class="de">FootyAgent ist ein Einzelspieler-Spiel, das komplett dir gehört. Du spielst, wann du
+      willst, so lange du willst — im Flugzeug genauso wie auf dem Sofa.</span>
+    <span class="en">FootyAgent is a single-player game that's entirely yours. Play when you want, as long
+      as you want — on a plane just as well as on the sofa.</span></p>
+  <div class="ohne">
+    <div><b><span class="de">Keine Werbung</span><span class="en">No ads</span></b>
+      <span class="de">Kein Banner, kein Video, keine Belohnungs-Spots.</span>
+      <span class="en">No banners, no videos, no rewarded spots.</span></div>
+    <div><b><span class="de">Keine Wartezeiten</span><span class="en">No waiting</span></b>
+      <span class="de">Keine Energie-Balken, keine Timer, kein „komm morgen wieder".</span>
+      <span class="en">No energy bars, no timers, no "come back tomorrow".</span></div>
+    <div><b><span class="de">Kein Pay-to-Win</span><span class="en">No pay-to-win</span></b>
+      <span class="de">Das Pro-Paket bringt Slots und Wappen — keine Vorteile im Spiel.</span>
+      <span class="en">The Pro Pack adds slots and crests — no in-game advantage.</span></div>
+    <div><b><span class="de">Kein Konto</span><span class="en">No account</span></b>
+      <span class="de">Keine Registrierung, kein Login, keine E-Mail nötig.</span>
+      <span class="en">No sign-up, no login, no email required.</span></div>
+    <div><b><span class="de">Keine Datensammlung</span><span class="en">No data harvesting</span></b>
+      <span class="de">Anonyme Statistik, mehr nicht. Spielstände bleiben bei dir und in deiner iCloud.</span>
+      <span class="en">Anonymous stats, nothing more. Saves stay with you and in your iCloud.</span></div>
+    <div><b><span class="de">Kein Onlinezwang</span><span class="en">No connection needed</span></b>
+      <span class="de">Die komplette Karriere läuft ohne Internet.</span>
+      <span class="en">The entire career runs without internet.</span></div>
+  </div>
+</section>
+</div>
+
+<!-- ============ SUPPORT ============ -->
+<div class="seite">
+<section id="support" style="padding-top:0">
+  <div class="glas support-box">
+    <div>
+      <h3><span class="de">Fragen, Feedback oder ein Fehler?</span>
+          <span class="en">Questions, feedback or a bug?</span></h3>
+      <p style="color:var(--text-sek);margin-top:6px;font-size:.95rem">
+        <span class="de">Schreib mir direkt — hinter FootyAgent steckt ein einzelner Entwickler,
+          und jede Nachricht landet bei mir persönlich.</span>
+        <span class="en">Write to me directly — FootyAgent is built by one developer,
+          and every message lands with me personally.</span></p>
+    </div>
+    <a class="mail" href="mailto:support@footyagent.de">
+      <svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor" aria-hidden="true">
+        <path d="M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5zM4.7 5l7.3 5.9L19.3 5z"/>
+      </svg>
+      support@footyagent.de
+    </a>
+  </div>
+</section>
+</div>
+
+</main>
+
+<footer>
+  <div class="foot-in">
+    <span>© 2026 Florian Schlauf · FootyAgent</span>
+    <span class="foot-links">
+      <a href="/datenschutz/"><span class="de">Datenschutz &amp; Impressum</span><span class="en">Privacy &amp; imprint</span></a>
+      <a href="mailto:support@footyagent.de">Support</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+/* Sprache: gespeicherte Wahl → sonst Browsersprache → sonst Deutsch.
+   Setzt nur Attribute; die Umschaltung selbst macht CSS (kein Flackern, kein Nachladen). */
+(function () {
+  var root = document.documentElement;
+  var knoepfe = document.querySelectorAll('[data-setlang]');
+
+  function setze(lang, merken) {
+    root.setAttribute('data-lang', lang);
+    root.setAttribute('lang', lang);
+    document.title = lang === 'en'
+      ? 'FootyAgent — Be the agent behind the stars'
+      : 'FootyAgent — Werde der Berater hinter den Stars';
+    knoepfe.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.setlang === lang));
+    });
+    if (merken) { try { localStorage.setItem('fa_lang', lang); } catch (e) {} }
+  }
+
+  var gespeichert = null;
+  try { gespeichert = localStorage.getItem('fa_lang'); } catch (e) {}
+  var start = gespeichert || ((navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en');
+  setze(start, false);
+
+  knoepfe.forEach(function (b) {
+    b.addEventListener('click', function () { setze(b.dataset.setlang, true); });
+  });
+})();
+</script>
+
 </body>
 </html>
