@@ -35,7 +35,9 @@ Seite auf die github.io-Adresse zurück und die Domain zeigt ins Leere.
 **Keine externen Ressourcen einbauen.** Keine Google Fonts, kein CDN, keine Tracker, keine
 eingebetteten Videos. Das ist kein Geschmacksurteil: Externe Ressourcen übertragen IP-Adressen an
 Dritte und wären in Deutschland einwilligungspflichtig — die Seite käme ohne Cookie-Banner nicht
-mehr aus. Alles liegt lokal in `assets/`.
+mehr aus. Alles liegt lokal in `assets/`. **Ausnahme (beabsichtigt):** Die Website sendet anonyme
+Seitenaufrufe und App-Store-Klicks an TelemetryDeck über das lokale Skript `assets/td.js` (kein CDN,
+keine Cookies); die Website-App-ID steht nur dort und gehört nicht ins Chat.
 
 **DE und EN immer paarweise pflegen.** Die Seite schaltet über `<span class="de">` und
 `<span class="en">` um. Wer nur eine Sprache ändert, erzeugt eine Seite, die je nach Umschalter
