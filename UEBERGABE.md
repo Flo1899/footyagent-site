@@ -35,11 +35,11 @@ Seite auf die github.io-Adresse zurück und die Domain zeigt ins Leere.
 **Keine externen Ressourcen einbauen.** Keine Google Fonts, kein CDN, keine Tracker, keine
 eingebetteten Videos. Das ist kein Geschmacksurteil: Externe Ressourcen übertragen IP-Adressen an
 Dritte und wären in Deutschland einwilligungspflichtig — die Seite käme ohne Cookie-Banner nicht
-mehr aus. Alles liegt lokal in `assets/`. **Ausnahme (beabsichtigt):** Die Website sendet wieder
-anonyme Seitenaufrufe und App-Store-Klicks an TelemetryDeck über das lokale Skript `assets/td.js`
-(kein CDN, keine Cookies). Die Website-App-ID steht nur dort und gehört nicht ins Chat. Niemals die
-iOS-App wiederverwenden — das vermischt App- und Website-Signale. Die Apple-Kampagne
-`?ct=website&mt=8` am Store-Link bleibt; das ist kein TelemetryDeck.
+mehr aus. Alles liegt lokal in `assets/`. **Ausnahme (vorbereitet, derzeit pausiert):** Das lokale
+Skript `assets/td.js` bleibt auf `/` und `/datenschutz/` eingebunden (kein CDN, keine Cookies),
+sendet aber nichts, bis Bob etwas anderes sagt. Keine TelemetryDeck-Sends. Flo setzt später
+selbst GA4 ein — hier keinen Tracker nachrüsten (kein CDN, kein Cookie-Banner, kein GA4-Snippet).
+Die Apple-Kampagne `?ct=website&mt=8` am Store-Link bleibt.
 
 **DE und EN immer paarweise pflegen.** Die Seite schaltet über `<span class="de">` und
 `<span class="en">` um. Wer nur eine Sprache ändert, erzeugt eine Seite, die je nach Umschalter
