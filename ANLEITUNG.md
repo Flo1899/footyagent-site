@@ -28,7 +28,7 @@ In `index.html` im `<body>`-Tag umstellen:
 ```
 
 Damit erscheint automatisch der grüne Download-Knopf, der auf
-`https://apps.apple.com/app/id6790972595` zeigt. Sonst ist **nichts** zu ändern.
+`https://apps.apple.com/app/id6790972595?ct=website&mt=8` zeigt. Sonst ist **nichts** zu ändern.
 
 > **Optional, aber sauberer:** Apples Markenrichtlinien verlangen für Store-Verlinkungen
 > das offizielle „Download on the App Store"-Badge. Unser Knopf ist eine eigene Gestaltung
