@@ -2,7 +2,7 @@
    App-ID nur in diesem Skript; nicht ins Chat kopieren. */
 (function () {
   var ENDPUNKT = 'https://nom.telemetrydeck.com/v2/w/';
-  var APP_ID = 'B5DB1118-B4E8-44C5-B4AF-D6808810B80A';
+  var APP_ID = '1BE7337D-FF3C-4FEB-8550-6B088109BB83';
 
   function sprache() {
     var wert = document.documentElement.getAttribute('data-lang');
