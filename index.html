@@ -563,7 +563,7 @@ html[data-lang="en"] .de{display:none!important}
 </footer>
 
 <script>
-/* Sprache: gespeicherte Wahl → sonst Browsersprache → sonst Deutsch.
+/* Sprache: ?lang=en|de → sonst gespeicherte Wahl → sonst Browsersprache → sonst Deutsch.
    Setzt nur Attribute; die Umschaltung selbst macht CSS (kein Flackern, kein Nachladen). */
 (function () {
   var root = document.documentElement;
@@ -581,10 +581,15 @@ html[data-lang="en"] .de{display:none!important}
     if (merken) { try { localStorage.setItem('fa_lang', lang); } catch (e) {} }
   }
 
-  var gespeichert = null;
-  try { gespeichert = localStorage.getItem('fa_lang'); } catch (e) {}
-  var start = gespeichert || ((navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en');
-  setze(start, false);
+  var urlLang = new URLSearchParams(location.search).get('lang');
+  if (urlLang === 'en' || urlLang === 'de') {
+    setze(urlLang, true);
+  } else {
+    var gespeichert = null;
+    try { gespeichert = localStorage.getItem('fa_lang'); } catch (e) {}
+    var start = gespeichert || ((navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en');
+    setze(start, false);
+  }
 
   knoepfe.forEach(function (b) {
     b.addEventListener('click', function () { setze(b.dataset.setlang, true); });

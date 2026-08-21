@@ -253,9 +253,14 @@ footer{border-top:1px solid rgba(130,160,220,.14);background:rgba(5,10,16,.5)}
     });
     if (merken) { try { localStorage.setItem('fa_lang', lang); } catch (e) {} }
   }
-  var gespeichert = null;
-  try { gespeichert = localStorage.getItem('fa_lang'); } catch (e) {}
-  setze(gespeichert || ((navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en'), false);
+  var urlLang = new URLSearchParams(location.search).get('lang');
+  if (urlLang === 'en' || urlLang === 'de') {
+    setze(urlLang, true);
+  } else {
+    var gespeichert = null;
+    try { gespeichert = localStorage.getItem('fa_lang'); } catch (e) {}
+    setze(gespeichert || ((navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en'), false);
+  }
   knoepfe.forEach(function (b) {
     b.addEventListener('click', function () { setze(b.dataset.setlang, true); });
   });
