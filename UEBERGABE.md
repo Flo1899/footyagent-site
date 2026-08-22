@@ -55,12 +55,11 @@ und alles rund um Apple-Konto und Einreichungen. Wer hier arbeitet, braucht nich
 
 ## Offene Punkte
 
-**1. Sprach-Chip — noch nicht ändern.** In `index.html` steht in der Merkmalliste
-»Deutsch & Englisch« bzw. »German & English«. Die App spricht inzwischen acht Sprachen
-(zusätzlich Spanisch, Portugiesisch (Brasilien), Französisch, Italienisch, Türkisch, Polnisch) —
-**aber erst ab Version 1.1.1**, und die liegt zum Zeitpunkt dieser Übergabe noch in Apples Prüfung.
-Die aktuell herunterladbare Version 1.1 kann wirklich nur Deutsch und Englisch. Erst nach der
-Freigabe ändern, sonst verspricht die Seite etwas, das die App nicht hält.
+**1. Sprach-Chip — erledigt (1.1.1 live).** In `index.html` steht in der Merkmalliste
+»8 Sprachen« bzw. »8 languages«. Version 1.1.1 ist seit 2026-08-22 im App Store und bringt
+DE, EN, ES, pt-BR, FR, IT, TR, PL. **Niemals Sprachen versprechen, die der aktuell
+herunterladbare Store-Build nicht hat.** Den Chip nur anpassen, wenn die herunterladbare
+Store-Version andere Sprachen hat.
 
 **2. Impressums-Adresse — Entscheidung des Betreibers.** `datenschutz/index.html` nennt die
 c/o-Anschrift eines Anbieters für Geschäftsadressen (Welserstraße 3, Dietmannsried). Im App Store
