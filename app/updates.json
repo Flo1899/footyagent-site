@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "items": [
+    {
+      "id": "2026-08-23-willkommen",
+      "date": "2026-08-23",
+      "type": "announcement",
+      "title": {
+        "de": "Willkommen bei den Updates",
+        "en": "Welcome to Updates",
+        "es": "Bienvenido a Actualizaciones",
+        "pt-BR": "Bem-vindo às Atualizações",
+        "fr": "Bienvenue dans les Mises à jour",
+        "it": "Benvenuto negli Aggiornamenti",
+        "tr": "Güncellemelere hoş geldin",
+        "pl": "Witaj w Aktualizacjach"
+      },
+      "body": {
+        "de": "Hier schreibe ich, woran ich gerade in FootyAgent arbeite, wann das nächste Update kommt und was es sonst anzukündigen gibt. Neue Meldungen erscheinen automatisch – ganz ohne App-Update.",
+        "en": "This is where I post what I'm currently building for FootyAgent, when the next update is coming and anything else worth announcing. New posts show up automatically — no app update needed.",
+        "es": "Aquí publico en qué estoy trabajando en FootyAgent, cuándo llega la próxima actualización y cualquier otro anuncio. Los mensajes nuevos aparecen automáticamente, sin actualizar la app.",
+        "pt-BR": "Aqui eu conto no que estou trabalhando no FootyAgent, quando sai a próxima atualização e o que mais houver para anunciar. As mensagens novas aparecem automaticamente, sem precisar atualizar o app.",
+        "fr": "C'est ici que je raconte ce que je développe pour FootyAgent, quand arrive la prochaine mise à jour et tout ce qu'il y a à annoncer. Les nouveaux messages apparaissent automatiquement, sans mise à jour de l'app.",
+        "it": "Qui racconto a cosa sto lavorando in FootyAgent, quando arriva il prossimo aggiornamento e tutto ciò che c'è da annunciare. I nuovi messaggi compaiono automaticamente, senza aggiornare l'app.",
+        "tr": "Burada FootyAgent'ta neler geliştirdiğimi, bir sonraki güncellemenin ne zaman geleceğini ve duyurulacak başka ne varsa paylaşıyorum. Yeni mesajlar otomatik görünür, uygulamayı güncellemen gerek yok.",
+        "pl": "Tutaj piszę, nad czym akurat pracuję w FootyAgent, kiedy pojawi się kolejna aktualizacja i co jeszcze warto ogłosić. Nowe wiadomości pojawiają się automatycznie — bez aktualizowania aplikacji."
+      }
+    }
+  ]
+}
