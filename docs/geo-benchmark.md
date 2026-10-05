@@ -20,6 +20,9 @@ anschließend monatlich. Immer dieselben Prompts, damit die Läufe vergleichbar 
 | `AIO` | Google-Suche: AI Overview / AI Mode | Prompt als Suchanfrage |
 | `COP` | Microsoft Copilot | Standard |
 
+**Wichtig bei ChatGPT:** möglichst **ohne Anmeldung** testen. Ein eigenes Konto mit Erinnerungen kennt FootyAgent und
+verfälscht das Ergebnis; der temporäre Chat nutzt Erinnerungen in der aktuellen Version ebenfalls (»Personalisiert«).
+
 **Regeln:** jeder Prompt in einem **neuen** Chat; nach Möglichkeit abgemeldet bzw. ohne Verlauf/Memory;
 Sprache und Land notieren (US/DE beeinflusst die Antworten); Antwort als Screenshot unter
 `docs/geo-benchmark/<datum>/` ablegen, wenn etwas Auffälliges passiert.
@@ -91,7 +94,51 @@ Eine Zeile je Prompt × Plattform × Datum. Kopiervorlage:
 
 <!-- Neue Läufe unten anhängen; Zusammenfassung je Lauf: Nennungen gesamt / Prompts, zitierte Quellen. -->
 
-_Noch kein Lauf erfasst. Erster Lauf = Ausgangswert vor dem Deploy._
+#### Lauf 1 – Ausgangswert, 06.10.2026 (ChatGPT)
+
+**Bedingungen:** ChatGPT **ohne Anmeldung** (keine Erinnerungen/Personalisierung – Florians Konto kennt FootyAgent aus
+früheren Chats, ein temporärer Chat ließ sich dort nicht entpersonalisieren), jede Frage in neuem Chat, Websuche
+automatisch (ChatGPT entscheidet selbst), Oberfläche Deutsch, Standort per IP Vietnam (Đà Nẵng). Die neuen Seiten
+waren seit 05.10. 19:30 UTC live, per IndexNow an Bing gemeldet, aber noch nicht indexiert → echter Ausgangswert.
+
+**Ergebnis in Zahlen**
+
+- Intent-Fragen (11): FootyAgent **1×** genannt (#26, DE, Platz 3 von 4) – Quelle App Store.
+- Marken-Fragen (3): **3/3 korrekt** (iPhone/iPad, Einzelspieler, offline, kostenlos + Pro-Paket 5,99 €, kein Android,
+  Entwickler Florian Schlauf); ChatGPT grenzt FootyAgent selbst von »Football Agent« (ATERO GAMES, Steam) ab.
+- **footyagent.app zitiert: 0 von 14.** Quelle für FootyAgent war immer der App Store.
+- Ohne Websuche (#9, #13) fragt ChatGPT zurück bzw. bietet ein eigenes Textspiel an – keine Spieleempfehlung.
+
+| Date | Prompt # | Platform | FootyAgent mentioned? | Position/context | Website cited? | App Store cited? | Competitors mentioned | Reason FootyAgent was/was not relevant | Notes |
+|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-06 | 1 | CGPT-S | nein | – | nein | nein (nur Konkurrenz) | Superstar Football Agent (»best overall«, 4,6★/~6.200), Football Agent (iOS, 0,99 $), Soccer Agent: Football Game | ChatGPT wählt nach App-Store-Bewertungen; FootyAgent hat wenige | Quellen nur App Store |
+| 2026-10-06 | 2 | CGPT-S | nein | – | nein | nein | Football Agent (Steam, ATERO), The Agency (Browser), Football Agent (Android), Football Agency Simulator | Steam-Spiel gleichen Namens dominiert | Steam, Google Play |
+| 2026-10-06 | 3 | CGPT-S | nein | – | nein | nein | Football Agent (Steam + Android), The Agency, Football Gem Agent 26 (iOS) | wie #2 | |
+| 2026-10-06 | 5 | CGPT-S | nein | – | nein | nein | Football Manager 26, EA Sports FC 27, Football Agent (Steam) | Manager-Spiele für »Transfers/Verträge« | |
+| 2026-10-06 | 8 | CGPT-S | nein | – | nein | nein | Football Manager 26 | deutet Frage als FM | Quelle FM Scout |
+| 2026-10-06 | 9 | CGPT | nein | – | nein | nein | – | keine Suche, Rückfrage | |
+| 2026-10-06 | 13 | CGPT | nein | – | nein | nein | – | keine Suche, bietet Textspiel an | |
+| 2026-10-06 | 18 | CGPT-S | nein | – | nein | nein | Lab11, Soccer Manager Club Sim 27, Football Legend, Dynasty Manager: Football | »Transfer-Simulator« = Manager-Spiele | Quellen App Store, Reddit |
+| 2026-10-06 | 21 | CGPT-S | nein | – | nein | nein | Football Agent (Steam, empfohlen; Mobil), Superstar Football Agent | wie #2 | |
+| 2026-10-06 | 22 | CGPT-S | nein | – | nein | nein | Football Agent (iOS), Fußball-Agent (4,6★/310), Football Gem Agent 26, Football Agent Simulator | iOS-Liste nach Store-Suche, FootyAgent nicht dabei | wichtigste Lücke |
+| 2026-10-06 | 26 | CGPT-S | **ja** | Platz 3 von 4, korrekt beschrieben | nein | **ja** | Football Agent (Steam), Football Agency Simulator, Football Sporting Director 27 | Store-Text passt zu »scouten + Verträge« | einziger Intent-Treffer |
+| 2026-10-06 | 35 | CGPT-S | **ja** | korrekte Beschreibung | nein | **ja** | Abgrenzung zu Football Agent (Steam) | Markenfrage | |
+| 2026-10-06 | 36 | CGPT-S | **ja** | kostenlos, Pro 5,99 €, kein Android – korrekt | nein | **ja** | Football Agent (Android) als anderes Spiel | Markenfrage | |
+| 2026-10-06 | (EN) What is FootyAgent? | CGPT-S | **ja** | korrekt, Entwickler genannt | nein | **ja** | – | Markenfrage | |
+
+**Was daraus folgt**
+
+1. **ChatGPT holt iOS-Spiele fast nur aus App-Store-Einträgen.** Untertitel und Beschreibung im Store sind damit direkt
+   GEO-relevant (Begriffe »football agent game«, »Spielerberater«, »scout, negotiate, transfers«).
+2. **Bewertungsanzahl entscheidet die Reihenfolge** (»best overall« = 6.200 Bewertungen). Mehr Bewertungen helfen auch
+   der KI-Sichtbarkeit.
+3. **Namenskonkurrenz:** »Football Agent« (Steam, Early Access seit 25.08.2026) taucht in 6 von 14 Antworten auf. Die klare
+   Formel »FootyAgent – the football agent game for iPhone & iPad« bleibt richtig; ChatGPT trennt die Spiele bereits.
+4. **Ziel für Lauf 2 (ca. 20.10.):** footyagent.app wird mindestens einmal zitiert; FootyAgent erscheint bei den
+   iPhone-Fragen (#1, #22).
+
+Ergänzend lohnt der Blick in **Bing Webmaster Tools → AI Performance (Beta)**: Dort zeigt Bing, wie oft footyagent.app in
+Copilot-/KI-Antworten erscheint (seit 06.10.2026 eingerichtet).
 
 ## Einordnen
 
