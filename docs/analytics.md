@@ -48,8 +48,8 @@ Per `before_send` an alle Ereignisse (auch `$pageview`/`$pageleave`) angehängt:
 
 | Eigenschaft | Beispiel | Bedeutung |
 |---|---|---|
-| `acquisition_channel` | `chatgpt` | Kanal dieses Seitenaufrufs, siehe §4 (`internal` = kam von einer eigenen Seite) |
-| `is_entry_page` | `true` | Seite wurde von außen betreten (nicht `internal`) |
+| `acquisition_channel` | `chatgpt` | **Erstkontakt des Besuchs**, siehe §4 – auf Folgeseiten weitergereicht; `internal` nur, wenn die Kette reißt |
+| `is_entry_page` | `true` | Seite wurde von außen betreten (Referrer nicht die eigene Domain) |
 | `page_language` | `de` | Sprache der Seite |
 | `page_type` | `intent` | `home`, `intent`, `feature`, `faq`, `updates`, `press`, `about`, `error` |
 | `site_build` | `6affc9f024` | Kennung des Website-Stands (zum Vergleichen vor/nach Änderungen) |
@@ -72,10 +72,23 @@ Reine Funktion in `site.js`, getestet in [`_src/tests/test_channel.mjs`](../_src
    sonst → `other_referral`.
 4. Referrer, der keine URL ist → `unknown`.
 
-**Erstkontakt:** Die Seite speichert bewusst **nichts** im Browser (keine Cookies, kein Storage – sonst
-wäre eine Einwilligung nötig). Der Erstkontakt einer Sitzung kommt deshalb aus PostHog selbst:
-Auf der Einstiegsseite steht er direkt in `acquisition_channel`; für Folgeseiten nutzt man die
-Sitzungs-Eigenschaften `$entry_referring_domain`, `$entry_utm_source`, `$entry_pathname` bzw. `$channel_type`.
+**Erstkontakt über Folgeseiten (ohne Browser-Speicher):** Die Seite speichert bewusst **nichts** im Browser
+(keine Cookies, kein Storage – sonst wäre eine Einwilligung nötig). Stattdessen hängt die Einstiegsseite den
+Kanal als `?fa_src=<kanal>` an alle internen Links. Die Folgeseite übernimmt ihn, entfernt ihn sofort per
+`history.replaceState` aus der Adresszeile (gemessen und geteilt wird die saubere URL) und reicht ihn weiter.
+Drei Sicherungen:
+
+1. `fa_src` zählt **nur bei internem Referrer** – ein geteilter, gebastelter oder eingetippter Link mit
+   `fa_src` wird ignoriert (dann gilt der normale Kanal).
+2. Nur externe Kanäle werden weitergereicht (nie `direct`, `internal`, `unknown`). Crawler kommen ohne
+   Referrer und ohne UTM, sehen also nie einen Parameter – keine doppelten URLs im Suchindex.
+3. Ausgenommen sind Links auf Dateien, `/assets/`, `/app/`, `/datenschutz/` und auf die gleiche Seite.
+
+Die Kette reißt nur beim Öffnen über das Kontextmenü (»In neuem Tab öffnen«) oder beim Neuladen einer
+Folgeseite – dann steht dort `internal`. Für solche Fälle (und als Gegenprobe) liefert PostHog den
+Erstkontakt der Sitzung zusätzlich über `$entry_referring_domain`, `$entry_utm_source`, `$entry_pathname`
+bzw. `$channel_type`. Die Einstiegsseite selbst steht in `landing_page` nur auf der Einstiegsseite;
+auf Folgeseiten → `$entry_pathname`.
 
 **Empfehlung PostHog-Einstellung:** unter *Project Settings → Web analytics → Custom channel types* einen
 Kanal **»ChatGPT«** anlegen (Referring domain = `chatgpt.com` *oder* `chat.openai.com`, *oder*
@@ -98,8 +111,9 @@ https://apps.apple.com/app/apple-store/id6790972595?pt=129172457&ct=<KAMPAGNE>&m
   Installationen. Fünf kleine Töpfe (chatgpt/ai/google/social/direct) blieben anfangs alle unter der
   Schwelle und zeigten gar nichts. Feiner aufteilen = eine Zeile in `product.json`, sobald `website_ai`
   regelmäßig Zahlen zeigt (z. B. `"chatgpt": "website_chatgpt"`, `"google_organic": "website_google"`).
-- Klicks auf Folgeseiten (Kanal `internal`) bekommen `website` – ohne Browser-Speicher ist der
-  Erstkontakt dort clientseitig unbekannt. In PostHog ist er über die Sitzung trotzdem auswertbar.
+- **Auch nach dem Weiterklicken richtig:** ChatGPT → Startseite → Feature-Seite → App Store ergibt
+  `website_ai`, weil der Erstkontakt über `?fa_src` mitwandert (§4). Nur wenn die Kette reißt
+  (Kontextmenü-Tab, Neuladen), fällt der Klick auf `website` zurück.
 - **Neutrale Links ohne Kampagne** (`https://apps.apple.com/app/id6790972595`) stehen dort, wo Dritte den
   Link weiterverwenden: JSON-LD, `llms.txt`, »Link for articles« in der Pressemappe. Sonst zählte Apple
   einen Klick direkt aus einer ChatGPT-Antwort fälschlich als Website-Besuch.
@@ -191,6 +205,8 @@ Einstiegsseiten, Referrer, Geräte, Absprung und Sitzungsdauer.
   Bildschirmgröße, Browsersprache, Zeitzone, Verweildauer, Scrolltiefe, die Ereignisse aus §6.
 - **Keine Cookies, kein localStorage/sessionStorage** durch PostHog (`cookieless_mode: 'always'`).
   Einzige Browser-Speicherung der Seite: `fa_lang` (localStorage), nur wenn jemand selbst die Sprache wählt.
+- Interne Links tragen bei Besuchern mit externem Erstkontakt den Parameter `fa_src=<kanal>` (z. B. `chatgpt`) –
+  eine grobe Kategorie wie ein UTM-Parameter, keine Kennung; nicht gespeichert, sofort aus der Adresszeile entfernt.
 - PostHog bildet aus `team_id`, täglich wechselndem Salt, IP, User-Agent und Hostname einen Hash zum
   Zählen; der Salt wird nach dem Tag gelöscht. Die IP wird vor jeder Anreicherung entfernt
   (keine GeoIP, kein Standort). Kein `identify()`, keine Personenprofile, keine Aufzeichnungen, keine Umfragen.
@@ -216,7 +232,9 @@ Einstiegsseiten, Referrer, Geräte, Absprung und Sitzungsdauer.
 - **Debug-Modus:** beliebige Seite mit `?fa_debug=1` öffnen → Ereignisse in der Konsole (`[FA] …`) und in
   `window.FA.events`; `FA.channel` zeigt den erkannten Kanal. Funktioniert auch ohne Schlüssel.
 - **Automatisch:** `node _src/tests/test_channel.mjs` (Kanal-Fälle, Kampagnen-Links, genau ein `app_store_click`,
-  Pflichtfelder, `cta_position`, Folgeseiten, Altlinks). Läuft bei jedem Push in GitHub Actions.
+  Pflichtfelder, `cta_position`, Erstkontakt über Folgeseiten samt Sicherungen, Altlinks). Läuft bei jedem Push
+  in GitHub Actions. Dazu `swift _src/tests/webkit_smoke.swift` (lokal): alle Seiten in der Safari-Engine plus
+  eine echte Reise ChatGPT → Unterseite → Download-Knopf.
 - **Nach dem Schlüssel-Eintrag:** `https://footyagent.app/?utm_source=chatgpt.com` öffnen, Download-Knopf
   klicken → in PostHog unter *Activity* erscheinen `$pageview` (mit `acquisition_channel = chatgpt`) und
   genau ein `app_store_click`.

@@ -150,7 +150,8 @@ cwebp -q 88 /tmp/wc.png -o assets/wappen.webp
 | `python3 _src/build.py --check` | erzeugte Dateien passen zu den Quellen (jemand hat HTML direkt bearbeitet?) |
 | `python3 _src/tests/test_site.py` | Titel, Beschreibung, genau eine H1, Canonical, hreflang (gegenseitig + x-default), JSON-LD (gültig, keine Bewertungen, Preis/Version), interne Links + Anker, Bilder + Alt-Texte, App-Store-Knöpfe mit Kampagne, Sitemap ↔ Seiten, robots.txt (OAI-SearchBot), llms.txt, OG-Bild 1200×630 |
 | `python3 _src/tests/test_site.py --live https://footyagent.app` | zusätzlich live: HTTP 200 für alle Seiten (als OAI-SearchBot), echte 404, Canonical, footyagent.de-Weiterleitung |
-| `node _src/tests/test_channel.mjs` | `site.js`: 39 Kanal-Fälle, Kampagnen je Kanal, `app_store_click` genau einmal, Pflichtfelder, Altlinks |
+| `node _src/tests/test_channel.mjs` | `site.js`: 39 Kanal-Fälle, Kampagnen je Kanal, `app_store_click` genau einmal, Pflichtfelder, Erstkontakt über Folgeseiten (`fa_src`), Altlinks |
+| `swift _src/tests/webkit_smoke.swift http://127.0.0.1:8765` | nur macOS: alle Seiten in der Safari-Engine + echte Reise ChatGPT → Unterseite → Knopf |
 
 Alle außer `--live` laufen bei jedem Push automatisch (`.github/workflows/site-check.yml`).
 

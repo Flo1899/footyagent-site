@@ -1,7 +1,8 @@
 // Prüft assets/site.js mit der echten Seitenkonfiguration – ohne Browser, ohne Abhängigkeiten.
 //   node _src/tests/test_channel.mjs
 // Abgedeckt: Kanal-Erkennung (channel_cases.json), Kampagnen-Link je Kanal, app_store_click genau
-// einmal je Klick samt Pflichtfeldern, cta_position, Weiterleitung alter ?lang-Links mit UTM.
+// einmal je Klick samt Pflichtfeldern, cta_position, Weiterleitung alter ?lang-Links mit UTM,
+// Erstkontakt über Folgeseiten (?fa_src an internen Links, nur bei internem Referrer gültig).
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -30,19 +31,21 @@ function fakeLink(attrs, inside = 'main') {
 }
 
 /** Führt site.js einmal aus, wie ein Browser beim Seitenaufruf. */
-function load({ url, referrer = '', file = 'index.html', links = [], clock = { now: 1_000_000 } }) {
+function load({ url, referrer = '', file = 'index.html', links = [], internal = [], clock = { now: 1_000_000 } }) {
   const u = new URL(url);
   const replaced = [];
+  const cleaned = [];
   const listeners = {};
   const sandbox = {
     document: {
       referrer, readyState: 'loading', documentElement: { lang: '' },
       getElementById: (id) => (id === 'fa-config' ? { textContent: configOf(file) } : null),
-      querySelectorAll: (sel) => (sel === 'a[data-cta]' ? links : []),
+      querySelectorAll: (sel) => (sel === 'a[data-cta]' ? links : sel === 'a[href^="/"]' ? internal : []),
       addEventListener: (type, fn) => { (listeners[type] ||= []).push(fn); },
     },
     location: { href: u.href, search: u.search, hostname: u.hostname, pathname: u.pathname, hash: u.hash,
       replace: (to) => replaced.push(to) },
+    history: { state: null, replaceState: (s, t, to) => cleaned.push(to) },
     navigator: { languages: ['en-US'], language: 'en-US' },
     localStorage: { getItem: () => null, setItem: () => {} },
     console: { info: () => {}, log: () => {}, warn: () => {} },
@@ -54,7 +57,7 @@ function load({ url, referrer = '', file = 'index.html', links = [], clock = { n
   vm.createContext(sandbox);
   vm.runInContext(SITE_JS, sandbox);
   const fire = (type, target, button = 0) => (listeners[type] || []).forEach((fn) => fn({ type, button, target }));
-  return { FA: sandbox.FA, replaced, fire, clock };
+  return { FA: sandbox.FA, replaced, cleaned, fire, clock };
 }
 
 let failed = 0, passed = 0;
@@ -145,6 +148,52 @@ for (const ch of ['chatgpt', 'ai_other', 'google_organic', 'direct', 'unknown', 
   check('Keine Messung vor der Weiterleitung', run.FA.channel === undefined);
   const same = load({ url: 'https://footyagent.app/?lang=en' });
   check('?lang=en auf englischer Seite: keine Weiterleitung', same.replaced.length === 0);
+}
+
+// 7) Erstkontakt über Folgeseiten (?fa_src)
+{
+  const cfgAI = cfg.campaigns.chatgpt || cfg.campaigns.default;
+  // Einstieg aus ChatGPT: interne Links bekommen den Kanal, Dateien/CTA/Rechtstext/gleiche Seite nicht
+  const nav = fakeLink({ href: '/features/negotiations/' });
+  const anchorLink = fakeLink({ href: '/faq/#q-free' });
+  const sameDe = fakeLink({ href: '/de/', 'data-setlang': 'de' });
+  const self = fakeLink({ href: '/football-agent-game/' });
+  const asset = fakeLink({ href: '/assets/footyagent-app-icon-1024.png' });
+  const privacy = fakeLink({ href: '/datenschutz/' });
+  const cta = fakeLink({ href: '/x', 'data-cta': 'hero' });
+  const entry = load({ url: 'https://footyagent.app/football-agent-game/?utm_source=chatgpt.com', file: 'football-agent-game/index.html',
+    internal: [nav, anchorLink, sameDe, self, asset, privacy, cta] });
+  check('Einstieg: interner Link trägt fa_src', nav.getAttribute('href') === '/features/negotiations/?fa_src=chatgpt', nav.getAttribute('href'));
+  check('Einstieg: Anker bleibt hinten', anchorLink.getAttribute('href') === '/faq/?fa_src=chatgpt#q-free', anchorLink.getAttribute('href'));
+  check('Einstieg: Sprachwechsel trägt fa_src', sameDe.getAttribute('href') === '/de/?fa_src=chatgpt');
+  check('Einstieg: gleiche Seite, Dateien, Datenschutz, CTA unverändert',
+    self.getAttribute('href') === '/football-agent-game/' && asset.getAttribute('href').endsWith('.png') &&
+    privacy.getAttribute('href') === '/datenschutz/' && cta.getAttribute('href') !== '/x?fa_src=chatgpt');
+  check('Einstieg: Adresszeile unangetastet (kein fa_src da)', entry.cleaned.length === 0);
+
+  // Folgeseite mit internem Referrer: übernimmt chatgpt, Kampagne website_ai, Parameter verschwindet
+  const btn = fakeLink({ 'data-cta': 'bottom_cta', href: 'x' });
+  const next = load({ url: 'https://footyagent.app/features/negotiations/?fa_src=chatgpt&fa_debug=1', file: 'features/negotiations/index.html',
+    referrer: 'https://footyagent.app/football-agent-game/?utm_source=chatgpt.com', links: [btn], internal: [fakeLink({ href: '/faq/' })] });
+  check('Folgeseite: Kanal chatgpt übernommen', next.FA.channel === 'chatgpt', next.FA.channel);
+  check(`Folgeseite: Knopf mit ct=${cfgAI}`, btn.getAttribute('href').includes(`ct=${cfgAI}`), btn.getAttribute('href'));
+  check('Folgeseite: fa_src aus Adresszeile entfernt, fa_debug bleibt',
+    next.cleaned.length === 1 && next.cleaned[0] === '/features/negotiations/?fa_debug=1', next.cleaned.join(' '));
+  next.fire('click', btn);
+  const p2 = next.FA.events.find((e) => e.event === 'app_store_click').properties;
+  check('Folgeseite: app_store_click mit acquisition_channel chatgpt', p2.acquisition_channel === 'chatgpt', p2.acquisition_channel);
+  check('Folgeseite: is_entry_page false, landing_page leer', p2.is_entry_page === false && p2.landing_page === null);
+
+  // Sicherungen
+  const shared = load({ url: 'https://footyagent.app/features/negotiations/?fa_src=chatgpt', referrer: 'https://www.reddit.com/' });
+  check('Geteilter Link (fremder Referrer): fa_src zählt nicht', shared.FA.channel === 'reddit', shared.FA.channel);
+  const typed = load({ url: 'https://footyagent.app/features/negotiations/?fa_src=chatgpt' });
+  check('Eingetippter Link (kein Referrer): fa_src zählt nicht', typed.FA.channel === 'direct', typed.FA.channel);
+  const bogus = load({ url: 'https://footyagent.app/faq/?fa_src=internal', referrer: 'https://footyagent.app/' });
+  check('Ungültiger Wert: fa_src zählt nicht', bogus.FA.channel === 'internal', bogus.FA.channel);
+  const direct = fakeLink({ href: '/faq/' });
+  load({ url: 'https://footyagent.app/', internal: [direct] });
+  check('Direktbesuch: Links bleiben sauber (Crawler sehen nie fa_src)', direct.getAttribute('href') === '/faq/', direct.getAttribute('href'));
 }
 
 console.log(`${passed} bestanden, ${failed} fehlgeschlagen`);

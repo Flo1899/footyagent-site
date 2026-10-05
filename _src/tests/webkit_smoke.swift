@@ -1,5 +1,6 @@
 // Safari-Engine-Test (WebKit, nur macOS): lädt jede Seite wie Safari und prüft im echten DOM:
 // keine JS-Fehler, Kanal-Erkennung, Kampagnen-Links, app_store_click genau einmal, FAQ-Ereignis.
+// Zum Schluss eine echte Reise: Einstieg aus ChatGPT → Klick auf Unterseite → Download-Knopf.
 //   python3 -m http.server 8765 &          (im Repo-Ordner)
 //   swift _src/tests/webkit_smoke.swift http://127.0.0.1:8765
 import AppKit
@@ -40,12 +41,34 @@ let pruefung = """
 })()
 """
 let nachFaq = "JSON.stringify({faqEvents: (window.FA ? FA.events : []).filter(e => e.event === 'faq_opened').length, fehler: window.__fehler})"
+// Reise, Schritt 1: auf der Einstiegsseite den internen Link zur Verhandlungsseite anklicken (echte Navigation)
+let reiseKlick = """
+(() => {
+  const a = document.querySelector('a[href^="/features/negotiations/"]');
+  if (!a) return 'kein Link';
+  const href = a.getAttribute('href');
+  a.click();
+  return href;
+})()
+"""
+// Reise, Schritt 2: auf der Folgeseite Kanal, saubere Adresse, Kampagne und Klick-Ereignis prüfen
+let reisePruefung = """
+(() => {
+  window.addEventListener('click', e => e.preventDefault());
+  const ctas = [...document.querySelectorAll('a[data-cta]')];
+  if (ctas[0]) ctas[0].click();
+  const k = (FA.events || []).find(e => e.event === 'app_store_click');
+  return JSON.stringify({ url: location.pathname + location.search, ref: document.referrer, channel: FA.channel,
+    ctaAI: ctas.length > 0 && ctas.every(a => a.href.includes('ct=website_ai')),
+    acq: k && k.properties.acquisition_channel, entry: k && k.properties.is_entry_page, fehler: window.__fehler });
+})()
+"""
 
 final class Lauf: NSObject, WKNavigationDelegate {
     let web: WKWebView
     var rest: [String]
     var fehlerGesamt = 0
-    var weiter: (() -> Void)?
+    var reise = 0          // 0 = Seitenliste, 1 = Einstieg geladen, 2 = Folgeseite geladen
 
     init(paths: [String]) {
         let cfg = WKWebViewConfiguration()
@@ -59,8 +82,9 @@ final class Lauf: NSObject, WKNavigationDelegate {
 
     func naechste() {
         guard let p = rest.first else {
-            print(fehlerGesamt == 0 ? "\nWebKit: alle Seiten OK" : "\nWebKit: \(fehlerGesamt) Fehler")
-            exit(fehlerGesamt == 0 ? 0 : 1)
+            reise = 1        // Seitenliste fertig → Reise starten
+            web.load(URLRequest(url: URL(string: base + "/football-agent-game/?utm_source=chatgpt.com&fa_debug=1")!))
+            return
         }
         let sep = p.contains("?") ? "&" : "?"
         web.load(URLRequest(url: URL(string: base + p + sep + "utm_source=chatgpt.com&fa_debug=1")!))
@@ -71,6 +95,35 @@ final class Lauf: NSObject, WKNavigationDelegate {
     }
 
     func webView(_ w: WKWebView, didFinish _: WKNavigation!) {
+        if reise == 1 {
+            reise = 2
+            w.evaluateJavaScript(reiseKlick) { r, _ in
+                let h = r as? String ?? "nil"
+                if !h.contains("fa_src=chatgpt") { print("✗ Reise: interner Link ohne fa_src (\(h))"); self.fehlerGesamt += 1 }
+            }
+            return
+        }
+        if reise == 2 {
+            w.evaluateJavaScript(reisePruefung) { r, e in
+                let a = (try? JSONSerialization.jsonObject(with: Data(((r as? String) ?? "{}").utf8))) as? [String: Any] ?? [:]
+                var probleme: [String] = []
+                if let e { probleme.append("JS: \(e.localizedDescription)") }
+                if (a["url"] as? String ?? "").contains("fa_src") { probleme.append("fa_src steht noch in der Adresse") }
+                if !(a["ref"] as? String ?? "").contains("/football-agent-game/") { probleme.append("Referrer \(a["ref"] ?? "nil")") }
+                if a["channel"] as? String != "chatgpt" { probleme.append("Kanal \(a["channel"] ?? "nil")") }
+                if a["ctaAI"] as? Bool != true { probleme.append("Knopf ohne website_ai") }
+                if a["acq"] as? String != "chatgpt" { probleme.append("app_store_click-Kanal \(a["acq"] ?? "nil")") }
+                if a["entry"] as? Bool != false { probleme.append("is_entry_page sollte false sein") }
+                if let f = a["fehler"] as? [String], !f.isEmpty { probleme.append("Konsole: \(f.joined(separator: " | "))") }
+                self.fehlerGesamt += probleme.count
+                print(probleme.isEmpty
+                      ? "✓ Reise ChatGPT → /football-agent-game/ → /features/negotiations/ → Knopf: Kanal chatgpt, Kampagne website_ai, Adresse \(a["url"] ?? "")"
+                      : "✗ Reise: \(probleme.joined(separator: "; "))")
+                print(self.fehlerGesamt == 0 ? "\nWebKit: alle Seiten OK" : "\nWebKit: \(self.fehlerGesamt) Fehler")
+                exit(self.fehlerGesamt == 0 ? 0 : 1)
+            }
+            return
+        }
         let p = rest.removeFirst()
         w.evaluateJavaScript(pruefung) { r1, e1 in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {      // toggle-Ereignis kommt asynchron

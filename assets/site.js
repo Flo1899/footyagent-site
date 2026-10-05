@@ -1,7 +1,8 @@
 /* FootyAgent – Website-Skript (keine Abhängigkeiten, ~15 KB, gzip ~5 KB).
  *
  *  1. Akquise-Kanal: getAcquisitionChannel() normalisiert UTM-Parameter und Referrer
- *     (UTM hat Vorrang). Nichts wird im Browser gespeichert.
+ *     (UTM hat Vorrang). Nichts wird im Browser gespeichert; der Erstkontakt wandert als
+ *     ?fa_src=… über interne Links zur nächsten Seite (nur bei internem Referrer gültig).
  *  2. App-Store-Knöpfe (a[data-cta]): Kampagnen-Link je Kanal setzen, Klick als
  *     »app_store_click« melden – genau einmal je Klick, egal wie viele Knöpfe die Seite hat.
  *  3. Weitere Ereignisse: language_changed, faq_opened, outbound_link_clicked.
@@ -116,9 +117,38 @@
   }
   FA.getAcquisitionChannel = getAcquisitionChannel;
 
-  var CHANNEL = getAcquisitionChannel(location.href, document.referrer, location.hostname);
-  var IS_ENTRY = CHANNEL !== 'internal';
+  // Erstkontakt über Folgeseiten: Die Einstiegsseite hängt den Kanal als ?fa_src=… an interne Links.
+  // Eine Folgeseite übernimmt ihn NUR bei internem Referrer (geteilte oder gebastelte Links zählen nicht)
+  // und nimmt ihn sofort wieder aus der Adresszeile. Grobe Kategorie, keine Kennung, nichts gespeichert.
+  var CARRY_PARAM = 'fa_src';
+  var CARRYABLE = ['chatgpt', 'ai_other', 'google_organic', 'bing_organic', 'other_search', 'reddit', 'youtube',
+    'tiktok', 'instagram', 'x', 'other_social', 'paid', 'other_referral'];   // nie direct/internal/unknown
+  var RAW_CHANNEL = getAcquisitionChannel(location.href, document.referrer, location.hostname);
+  var carried = URL_PARAMS.get(CARRY_PARAM);
+  var CHANNEL = RAW_CHANNEL === 'internal' && CARRYABLE.indexOf(carried) >= 0 ? carried : RAW_CHANNEL;
+  var IS_ENTRY = RAW_CHANNEL !== 'internal';
   FA.channel = CHANNEL;
+  if (URL_PARAMS.has(CARRY_PARAM)) {            // vor dem PostHog-Pageview: gemessen wird die saubere URL
+    URL_PARAMS.delete(CARRY_PARAM);
+    var cleanQuery = URL_PARAMS.toString();
+    try { history.replaceState(history.state, '', location.pathname + (cleanQuery ? '?' + cleanQuery : '') + location.hash); } catch (e) {}
+  }
+
+  /** Interne Links tragen den Erstkontakt weiter. Crawler kommen ohne Referrer/UTM (= direct) und sehen nie einen Parameter. */
+  function carryLinks(channel) {
+    var keep = CARRYABLE.indexOf(channel) >= 0 ? channel : null;
+    if (!keep && !DEBUG) return;
+    var extra = [keep ? CARRY_PARAM + '=' + encodeURIComponent(keep) : '', DEBUG ? 'fa_debug=1' : ''].filter(Boolean).join('&');
+    var links = document.querySelectorAll('a[href^="/"]');
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i], href = a.getAttribute('href') || '';
+      var cut = href.indexOf('#'), path = cut >= 0 ? href.slice(0, cut) : href, hash = cut >= 0 ? href.slice(cut) : '';
+      if (a.hasAttribute('data-cta') || href.charAt(1) === '/' || path === location.pathname ||
+          /^\/(assets|app|datenschutz)(\/|$)/.test(path) || /\.[a-z0-9]{2,5}(\?|$)/i.test(path)) continue;   // Dateien, Rechtstext, gleiche Seite
+      a.setAttribute('href', path + (path.indexOf('?') >= 0 ? '&' : '?') + extra + hash);
+    }
+  }
+  carryLinks(CHANNEL);
 
   // ---------------------------------------------------------------- Analytics
   var queue = [];
