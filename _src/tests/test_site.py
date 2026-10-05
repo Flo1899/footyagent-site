@@ -262,8 +262,10 @@ def live(base: str):
     st, _, _ = get(base + "/gibt-es-nicht-" + "x" * 6 + "/")
     if st != 404: err("LIVE 404", f"fehlende Seite liefert HTTP {st} statt 404")
     st, hdr, _ = get("https://footyagent.de/")
-    if st == 302: note("LIVE footyagent.de", "leitet mit 302 weiter – besser 301 (IONOS-Einstellung)")
-    elif st not in (301, 308): note("LIVE footyagent.de", f"HTTP {st}")
+    if st not in (301, 302, 308):                       # IONOS-Weiterleitung = 302 (kein 301 möglich), bekannt
+        err("LIVE footyagent.de", f"Weiterleitung kaputt: HTTP {st}")
+    elif (hdr.get("location") or hdr.get("Location") or "").rstrip("/") != ORIGIN:
+        err("LIVE footyagent.de", f"leitet nicht auf {ORIGIN} weiter")
 
 
 if "--live" in sys.argv:

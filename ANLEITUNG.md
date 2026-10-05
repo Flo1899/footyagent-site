@@ -160,7 +160,13 @@ Alle außer `--live` laufen bei jedem Push automatisch (`.github/workflows/site-
 Öffentliches Repo `Flo1899/footyagent-site`, GitHub Pages aus `main` (Root), Jekyll an.
 
 **DNS (IONOS):** `footyagent.app` → A-Records `185.199.108–111.153`; `footyagent.de` → Weiterleitung auf
-`https://footyagent.app` (**derzeit 302, sollte 301 sein**); `support@footyagent.de` → IONOS-Postfach.
+`https://footyagent.app` (IONOS-Weiterleitung antwortet immer mit 302 – ein 301 bietet IONOS dort nicht an;
+für eine kaum verlinkte Zweitdomain unkritisch); `support@footyagent.de` → IONOS-Postfach.
+
+**Suchmaschinen (eingerichtet 06.10.2026):** Google Search Console = Domain-Property `footyagent.app`, bestätigt
+über den TXT-Eintrag `google-site-verification=…` im DNS von footyagent.app – **diesen Eintrag nie löschen**, sonst
+geht der Zugang verloren. Sitemap dort eingereicht. Alle Seiten per IndexNow gemeldet (`_src/indexnow.py`).
+Bing Webmaster Tools: per »Import aus Search Console« anlegen (Anmeldung macht Florian selbst).
 
 ⚠️ **Zertifikat-Falle:** Bleibt HTTPS nach dem Setzen der Domain hängen (`cert_state=none`): Domain lösen
 (`CNAME` löschen **und** `gh api --method PUT repos/Flo1899/footyagent-site/pages -f cname=""`), ~80 s warten,
