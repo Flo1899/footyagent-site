@@ -194,6 +194,11 @@ Landingpage (`$entry_pathname`), Gerät (`$device_type`), Sprache (`$browser_lan
 Ohne jede Einrichtung zeigt außerdem das eingebaute **Web Analytics**-Dashboard Kanäle (inkl. »AI«),
 Einstiegsseiten, Referrer, Geräte, Absprung und Sitzungsdauer.
 
+**Außerhalb von PostHog** (seit 06.10.2026 eingerichtet): Google Search Console (Domain- und URL-Property
+footyagent.app) für Google-Suche und AI Overviews, Bing Webmaster Tools mit dem Bericht **»AI Performance (Beta)«** –
+er zeigt, wie oft footyagent.app in Copilot-/KI-Antworten von Bing erscheint (für ChatGPT relevant, weil dessen Suche
+u. a. auf Bing zurückgreift). Die Nennungen selbst misst der GEO-Benchmark ([geo-benchmark.md](geo-benchmark.md)).
+
 ## 8. Datenschutz und Grenzen
 
 **Was neu verarbeitet wird, sobald ein Schlüssel gesetzt ist** (Grundlage für die Datenschutzerklärung –
