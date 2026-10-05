@@ -1,0 +1,116 @@
+/* ============================================================
+   Ergänzungen für die Mehrseiten-Website (Oktober 2026).
+   Gleiche Bühne, gleiche Farben – nur neue Bausteine.
+   ============================================================ */
+
+/* Sprungmarke für Tastatur/Screenreader */
+.skip{position:absolute;left:-999px;top:8px;z-index:99;background:var(--aktion);color:#04220F;
+  padding:8px 14px;border-radius:10px;font-weight:800;text-decoration:none}
+.skip:focus{left:12px}
+
+/* Kopfleiste: Navigation + Sprach-Links + kleiner Store-Knopf */
+.nav{display:flex;gap:4px;margin-left:18px}
+.nav a{color:var(--text-sek);text-decoration:none;font-weight:700;font-size:.9rem;padding:6px 10px;border-radius:10px}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--text);background:var(--glas-innen)}
+.sprache a{color:var(--text-sek);font-size:.8rem;font-weight:800;padding:5px 12px;border-radius:999px;
+  text-decoration:none;letter-spacing:.4px}
+.sprache a[aria-current="true"]{background:var(--aktion);color:#04220F}
+.knopf.mini{padding:8px 14px;border-radius:11px;font-size:.88rem;gap:7px;box-shadow:0 3px 0 #06482A}
+.knopf.mini svg{width:15px;height:15px}
+@media (max-width:900px){.nav a.weg-mobil{display:none}}
+@media (max-width:640px){.nav{display:none}.knopf.mini span{display:none}.knopf.mini{padding:8px 11px}}
+
+/* Sprachhinweis (nur wenn die Browsersprache zur anderen Fassung passt) */
+.sprachhinweis{background:rgba(47,208,119,.12);border-bottom:1px solid rgba(47,208,119,.28)}
+.sprachhinweis .seite{display:flex;gap:12px;align-items:center;justify-content:center;padding:8px 0;font-size:.9rem}
+.sprachhinweis a{color:var(--neon);font-weight:800}
+.sprachhinweis button{background:transparent;border:0;color:var(--text-sek);font:inherit;font-size:1.2rem;
+  cursor:pointer;padding:0 6px;line-height:1}
+
+/* Brotkrumen */
+.krumen{font-size:.82rem;color:var(--text-sek);padding-top:22px}
+.krumen ol{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.krumen li+li::before{content:"›";margin-right:6px;opacity:.6}
+.krumen a{color:var(--text-sek);text-decoration:none}
+.krumen a:hover{color:var(--text);text-decoration:underline}
+
+/* Unterseiten-Kopf */
+.kopf{padding:clamp(26px,4vw,48px) 0 8px}
+.kopf h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-1.2px}
+.kopf .lead{margin-top:16px;max-width:62ch}
+.antwort{margin-top:22px;padding:16px 18px;border-left:3px solid var(--aktion);background:var(--glas);
+  border-radius:0 14px 14px 0;max-width:66ch;color:var(--text)}
+
+/* Fließtext-Seiten */
+.prosa{max-width:70ch}
+.prosa h2{font-size:clamp(1.4rem,2.6vw,1.9rem);margin:46px 0 12px;letter-spacing:-.6px}
+.prosa h3{margin:26px 0 8px;font-size:1.08rem}
+.prosa p{color:var(--text-sek);margin:0 0 14px}
+.prosa p b,.prosa li b{color:var(--text)}
+.prosa ul,.prosa ol{color:var(--text-sek);margin:0 0 16px 1.2em;display:grid;gap:7px}
+.prosa a,.antwort a,.faq a,.versionen a,.lead a{color:var(--neon)}
+.prosa table{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:.92rem}
+.prosa th,.prosa td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--glas-linie);vertical-align:top}
+.prosa th{color:var(--text);font-weight:800}
+.prosa td{color:var(--text-sek)}
+.tabelle-rahmen{overflow-x:auto}
+
+/* Zwei-Spalten-Abschnitt: Text + Gerät */
+.zweispalter{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(24px,5vw,60px);align-items:start;padding:18px 0 10px}
+.zweispalter .phone{position:sticky;top:90px;width:min(260px,70vw)}
+figure.bild{margin:0}
+figure.bild figcaption{font-size:.8rem;color:var(--text-sek);text-align:center;margin-top:12px;max-width:30ch;margin-inline:auto}
+@media (max-width:860px){.zweispalter{grid-template-columns:1fr}.zweispalter .phone{position:relative;top:auto}}
+
+/* Steckbrief (Fakten auf einen Blick) */
+.steckbrief{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:1px;margin-top:28px;
+  background:var(--glas-linie);border:1px solid var(--glas-linie);border-radius:var(--radius);overflow:hidden}
+.steckbrief div{background:rgba(8,17,28,.92);padding:14px 16px}
+.steckbrief dt{font-size:.74rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--neon)}
+.steckbrief dd{margin-top:4px;color:var(--text);font-weight:600;font-size:.95rem}
+
+/* Weiterlesen-Kacheln (interne Verlinkung) */
+.weiter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px;margin-top:22px;list-style:none}
+.weiter-grid a{display:block;height:100%;padding:16px 18px;border-radius:14px;background:var(--glas);
+  border:1px solid var(--glas-linie);text-decoration:none;color:var(--text);transition:border-color .15s}
+.weiter-grid a:hover{border-color:rgba(47,208,119,.55)}
+.weiter-grid b{display:block;font-size:1rem}
+.weiter-grid span{display:block;margin-top:4px;font-size:.86rem;color:var(--text-sek)}
+
+/* FAQ */
+.faq{display:grid;gap:10px;margin-top:22px;max-width:76ch}
+.faq details{background:var(--glas);border:1px solid var(--glas-linie);border-radius:14px;padding:0 18px}
+.faq summary{cursor:pointer;font-weight:800;padding:16px 0;list-style:none;display:flex;gap:12px;justify-content:space-between}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--aktion);font-size:1.3rem;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{color:var(--text-sek);padding:0 0 16px}
+.faq h2{font-size:inherit;font-weight:inherit;letter-spacing:0;line-height:1.4}
+
+/* Versionsliste */
+.versionen{display:grid;gap:14px;margin-top:22px;max-width:76ch;list-style:none}
+.versionen li{padding:18px;border-radius:14px;background:var(--glas);border:1px solid var(--glas-linie)}
+.versionen h2{font-size:1.15rem;letter-spacing:-.2px}
+.versionen time{color:var(--text-sek);font-size:.85rem;font-weight:700;margin-left:8px}
+.versionen p.titel{color:var(--gold);font-weight:800;margin-top:6px}
+.versionen ul{margin:8px 0 0 1.1em;color:var(--text-sek);display:grid;gap:5px}
+
+/* Pressebilder */
+.pressebilder{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:16px}
+.pressebilder a{display:block;border-radius:14px;overflow:hidden;border:1px solid var(--glas-linie)}
+.pressebilder img{width:100%;height:auto;display:block;aspect-ratio:1320/2868;object-fit:cover}
+
+/* Fußzeile mit Spalten */
+.foot-spalten{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:24px;align-items:start;margin-bottom:26px}
+.foot-spalten p{margin-top:8px;max-width:30ch}
+.foot-spalten nav{display:grid;gap:7px}
+.foot-spalten nav b{color:var(--text);font-size:.82rem;letter-spacing:1px;text-transform:uppercase}
+.foot-in .foot-spalten a,.foot-spalten a{margin-left:0}
+.foot-sozial{display:flex;gap:14px}
+@media (max-width:860px){.foot-spalten{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.foot-spalten{grid-template-columns:1fr}}
+
+/* 404 */
+.fehler{text-align:center;padding:clamp(60px,12vw,140px) 0}
+.fehler .lead{margin:16px auto 0}
+.fehler .cta-reihe{justify-content:center}

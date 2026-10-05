@@ -1,0 +1,33 @@
+# footyagent.app – robots.txt
+# Alle öffentlichen Seiten dürfen gecrawlt werden – auch von KI-Suchsystemen.
+# OAI-SearchBot = ChatGPT-Suche, ChatGPT-User = Abruf auf Nutzerwunsch, GPTBot = OpenAI-Training.
+# GPTBot bewusst erlaubt (Bekanntheit des Spiels in Modellen). Zum Sperren: »Allow« → »Disallow«.
+
+User-agent: *
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://footyagent.app/sitemap.xml

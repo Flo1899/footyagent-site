@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- Vorlage für das Link-Vorschaubild (assets/footyagent-og.jpg, 1200×630).
+     Neu erzeugen: siehe ANLEITUNG.md, Abschnitt »Link-Vorschaubild« (render.swift + sips).
+     Wird nicht veröffentlicht (_src). -->
+<html lang="en"><head><meta charset="utf-8"><title>OG</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#E8ECFF;
+  background:radial-gradient(520px 420px at 10% -10%,rgba(214,232,255,.14),transparent 62%),
+             radial-gradient(520px 420px at 92% -10%,rgba(214,232,255,.14),transparent 62%),
+             linear-gradient(180deg,#060D14 0%,#08151F 46%,#0B2B1D 80%,#124928 100%);position:relative}
+.streifen{position:absolute;left:-5%;right:-5%;bottom:0;height:200px;opacity:.5;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.055) 0 9%,rgba(255,255,255,0) 9% 18%)}
+.kreis{position:absolute;left:50%;bottom:-120px;width:900px;height:240px;transform:translateX(-50%);border:2px solid rgba(255,255,255,.14);border-radius:50%}
+.links{position:absolute;left:70px;top:0;bottom:0;width:580px;display:flex;flex-direction:column;justify-content:center;padding-bottom:10px}
+.marke{display:flex;align-items:center;gap:16px;font-weight:800;font-size:34px;letter-spacing:-.4px}
+.marke img{width:64px;height:64px;border-radius:15px;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.gruen{color:#2FD077}
+h1{margin-top:40px;font-size:60px;line-height:1.04;font-weight:900;letter-spacing:-2px}
+h1 span{display:block;background:linear-gradient(96deg,#2FD077,#2EE6A8 55%,#FFD76A);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{margin-top:24px;font-size:24px;color:#8F9AC7;font-weight:600}
+.chips{display:flex;gap:10px;margin-top:30px}
+.chips span{font-size:19px;font-weight:800;color:#E8ECFF;background:rgba(32,48,74,.6);border:1px solid rgba(130,160,220,.2);border-radius:999px;padding:8px 16px}
+.phone{position:absolute;width:250px;aspect-ratio:1320/2868;background:#05070C;border-radius:15% / 6.9%;padding:2.4%;
+  box-shadow:0 0 0 1.5px rgba(150,175,225,.30),0 30px 60px rgba(0,0,0,.62),0 0 90px rgba(47,208,119,.12)}
+.phone img{width:100%;height:100%;object-fit:cover;border-radius:12.6% / 5.8%;display:block}
+.p1{left:690px;top:70px;transform:rotate(-5deg)}
+.p2{left:905px;top:110px;transform:rotate(5deg)}
+</style></head><body>
+<div class="streifen"></div><div class="kreis"></div>
+<div class="links">
+  <div class="marke"><img src="/assets/footyagent-icon-96.webp" alt=""><span>Footy<span class="gruen">Agent</span></span></div>
+  <h1>Football agent game <span>for iPhone &amp; iPad</span></h1>
+  <p>Scout talents · Negotiate deals · Build your agency</p>
+  <div class="chips"><span>Free</span><span>Offline</span><span>No ads</span></div>
+</div>
+<div class="phone p1"><img src="/assets/footyagent-transfer-decision.webp" alt=""></div>
+<div class="phone p2"><img src="/assets/footyagent-inbox-transfer-offers.webp" alt=""></div>
+</body></html>

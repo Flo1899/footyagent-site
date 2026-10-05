@@ -1,0 +1,27 @@
+# FootyAgent
+
+> FootyAgent is a single-player football agent management game for iPhone and iPad (iOS/iPadOS 17.0 or later). You play as a players' agent, not a coach: scout talents, negotiate agent contracts, wages, playing time and transfers, and grow your agency. Free, no ads, playable offline, no account needed. Developer: Florian Schlauf (Germany). Current version 1.2.10.
+
+## Official pages
+
+- [The football agent game](https://footyagent.app/football-agent-game/): What FootyAgent is and how it differs from a manager game.
+- [On iPhone & iPad](https://footyagent.app/football-agent-game-ios/): Requirements, price, offline play and iCloud.
+- [How it works](https://footyagent.app/how-it-works/): Weeks, seasons, transfer windows and your inbox.
+- [Scouting](https://footyagent.app/features/scouting/): Find talent – and see through the uncertainty.
+- [Negotiations](https://footyagent.app/features/negotiations/): Commission, playing time, contract length and wages.
+- [Transfers & loans](https://footyagent.app/features/transfers/): Offers, pitching clients to clubs and loan deals.
+- [Agency management](https://footyagent.app/features/agency-management/): Office, staff, licences, specialisations, club shares.
+- [Offline play](https://footyagent.app/offline-football-game/): What works without internet (everything that matters).
+- [FAQ](https://footyagent.app/faq/): Short answers to common questions.
+- [Updates](https://footyagent.app/updates/): Every version since the launch.
+- [Press kit](https://footyagent.app/press/): Facts, descriptions, screenshots and contact.
+- [Deutsch](https://footyagent.app/de/): German homepage
+- [App Store](https://apps.apple.com/app/id6790972595): Download
+
+## Facts
+
+- Platforms: iPhone, iPad
+- Price: free (optional one-time Pro Pack, no gameplay advantage)
+- Languages: English, German, Spanish, Portuguese (Brazil), French, Italian, Turkish and Polish
+- World: 17 nations, 26 leagues, 480 clubs (fictional players, clubs named after cities)
+- Released: 2026-08-17
