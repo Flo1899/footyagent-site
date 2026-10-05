@@ -21,6 +21,9 @@ dann mergen. Live-Prüfung siehe `ANLEITUNG.md` (Build-Kennung vergleichen, `?cb
 
 **`CNAME` niemals löschen oder ändern.** Inhalt ist `footyagent.app`.
 
+**DNS-Eintrag `google-site-verification` (TXT, footyagent.app) nie löschen** – er hält die Google Search Console
+bestätigt (eingerichtet 06.10.2026).
+
 **Zwei Pfade sind im App Store hinterlegt** (alle 9 Store-Sprachen, geprüft 05.10.2026) und dürfen nie
 verschwinden: `/` (Support- und Marketing-URL) und `/datenschutz/` (Datenschutz-URL).
 

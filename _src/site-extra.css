@@ -18,7 +18,8 @@
 .knopf.mini{padding:8px 14px;border-radius:11px;font-size:.88rem;gap:7px;box-shadow:0 3px 0 #06482A}
 .knopf.mini svg{width:15px;height:15px}
 @media (max-width:900px){.nav a.weg-mobil{display:none}}
-@media (max-width:640px){.nav{display:none}.knopf.mini span{display:none}.knopf.mini{padding:8px 11px}}
+/* Handy: Text des Mini-Knopfs nur optisch ausblenden – Screenreader und Lighthouse brauchen den Linknamen */
+@media (max-width:640px){.nav{display:none}.knopf.mini{position:relative;padding:8px 11px}.knopf.mini>span{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}}
 
 /* Sprachhinweis (nur wenn die Browsersprache zur anderen Fassung passt) */
 .sprachhinweis{background:rgba(47,208,119,.12);border-bottom:1px solid rgba(47,208,119,.28)}
