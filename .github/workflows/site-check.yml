@@ -1,0 +1,21 @@
+# Prüft bei jedem Push und Pull Request: Ausgabe passt zu den Quellen (_src), SEO-Struktur,
+# Analytics-Logik (Kanal-Erkennung, app_store_click genau einmal). Rotes X = nicht mergen.
+name: Website-Prüfung
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Sitemap-Datum der Datenschutzseite kommt aus der Git-Historie
+      - name: Ausgabe aktuell (build.py --check)
+        run: python3 _src/build.py --check
+      - name: SEO- und Strukturprüfung
+        run: python3 _src/tests/test_site.py
+      - name: Analytics-Logik (site.js)
+        run: node _src/tests/test_channel.mjs

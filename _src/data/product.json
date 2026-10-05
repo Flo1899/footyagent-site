@@ -1,0 +1,119 @@
+{
+  "_hinweis": "EINZIGE Quelle für Produktfakten der Website. Jede Zahl ist gegen den App-Code bzw. den App Store geprüft (Stand 05.10.2026, Version 1.2.10). Nach jedem Release: python3 _src/sync_appstore.py, dann python3 _src/build.py. Fakten nur ändern, wenn die herunterladbare Store-Version sie wirklich hat.",
+
+  "site": {
+    "origin": "https://footyagent.app",
+    "name": "FootyAgent",
+    "supportEmail": "support@footyagent.de",
+    "xHandle": "@footyagent_app",
+    "ogImage": "/assets/footyagent-og.jpg",
+    "themeColor": "#060D14",
+    "indexNowKey": "783d4a999a5dbf31e9cf845b9b09a828"
+  },
+
+  "app": {
+    "name": "FootyAgent",
+    "appStoreId": "6790972595",
+    "developer": "Florian Schlauf",
+    "developerCountry": {"en": "Germany", "de": "Deutschland"},
+    "releaseDate": "2026-08-17",
+    "currentVersion": "1.2.10",
+    "currentVersionDate": "2026-09-27",
+    "minimumOs": "17.0",
+    "devices": ["iPhone", "iPad"],
+    "price": "0",
+    "priceCurrency": "EUR",
+    "ageRating": "4+",
+    "downloadSizeMB": 21,
+    "gameCenter": true,
+    "category": {"en": "Football agent management game", "de": "Fußball-Berater-Managementspiel"},
+    "genres": {"en": ["Sports", "Simulation"], "de": ["Sport", "Simulation"]},
+    "mode": {"en": "Single-player", "de": "Einzelspieler"},
+    "offline": {"en": "Fully playable offline, no account needed", "de": "Komplett offline spielbar, kein Konto nötig"},
+    "proPack": {
+      "name": {"en": "Pro Pack", "de": "Pro-Paket"},
+      "what": {"en": "one optional one-time purchase: two extra save slots for new careers and exclusive agency crests — no gameplay advantage", "de": "ein optionaler Einmalkauf: zwei zusätzliche Spielstände für neue Karrieren und exklusive Agentur-Wappen — kein Vorteil im Spiel"}
+    },
+    "languages": [
+      {"code": "en", "en": "English", "de": "Englisch"},
+      {"code": "de", "en": "German", "de": "Deutsch"},
+      {"code": "es", "en": "Spanish", "de": "Spanisch"},
+      {"code": "pt-BR", "en": "Portuguese (Brazil)", "de": "Portugiesisch (Brasilien)"},
+      {"code": "fr", "en": "French", "de": "Französisch"},
+      {"code": "it", "en": "Italian", "de": "Italienisch"},
+      {"code": "tr", "en": "Turkish", "de": "Türkisch"},
+      {"code": "pl", "en": "Polish", "de": "Polnisch"}
+    ],
+    "numbers": {
+      "nations": 17,
+      "leagues": 26,
+      "clubs": 480,
+      "achievements": 51,
+      "crests": 24,
+      "starterCrests": 6,
+      "agencies": 100,
+      "agencyTiers": 6,
+      "licences": 4,
+      "officeLevels": 10,
+      "minClients": 3,
+      "maxClients": 15,
+      "scoutingLevels": 5,
+      "staffRoles": 6,
+      "specialisations": 3,
+      "clubStrategies": 4,
+      "saveSlotsFree": 1,
+      "saveSlotsPro": 3,
+      "incidentTypes": 18,
+      "seasonWeeks": 52,
+      "playingRoles": 4,
+      "officeClients": [3, 4, 5, 6, 7, 8, 9, 11, 13, 15]
+    },
+    "_quellen_numbers": "Leagues.swift (17 Länder, 26 Ligen, 480 Städte-Vereine), Erfolg.swift (51), Wappen.swift (24), Prestige.swift (6), Lizenz.swift (4 Stufen, 3 Spezialisierungen), GameState.swift (bueroMaxLevel 10, bueroKlientenStufen 3…15, 100 Agenturen), Mitarbeiter.swift (6), VereinsStrategie.swift (4), SaveManager.swift (3 Slots, ab Slot 2 Pro), bueroKlientenStufen (officeClients), Spielzeitrolle.swift (4), Spielübersicht 11.09. (18 Vorfall-Arten, 52 Wochen, 5 Scouting-Stufen)"
+  },
+
+  "terms": {
+    "tiers": {"en": ["Local Agency", "Regional Agency", "National Agency", "Continental Agency", "Worldwide Agency", "Legendary Agency"],
+              "de": ["Lokale Agentur", "Regionale Agentur", "Nationale Agentur", "Kontinentale Agentur", "Weltweite Agentur", "Legenden-Agentur"]},
+    "licences": {"en": ["National licence", "Continental licence", "World licence", "Legend licence"],
+                 "de": ["Nationale Lizenz", "Kontinentale Lizenz", "Welt-Lizenz", "Legenden-Lizenz"]},
+    "staff": {"en": ["Chief Scout", "Analyst", "Contract Lawyer", "Co-Agent", "Physiotherapist", "PR Manager"],
+              "de": ["Chef-Scout", "Analyst", "Vertragsanwalt", "Co-Berater", "Physiotherapeut", "PR-Manager"]},
+    "specialisations": {"en": ["Talent hunter", "Hard-nosed", "Networker"], "de": ["Talentjäger", "Knallhart", "Netzwerker"]},
+    "strategies": {"en": ["Youth & Sales", "Title Chase", "Austerity", "Balanced"], "de": ["Jugend & Verkauf", "Titeljagd", "Sparkurs", "Ausgeglichen"]},
+    "roles": {"en": ["Key player", "Regular", "Rotation", "Reserve"], "de": ["Schlüsselspieler", "Stammspieler", "Rotationsspieler", "Reservespieler"]}
+  },
+
+  "appStore": {
+    "_hinweis": "Apple-Kampagnenlinks: pt = Anbieter-ID des Kontos (aus App Store Connect bestätigt), ct = frei wählbarer Kampagnenname. Apple zeigt eine Kampagne erst ab 5 Installationen – deshalb wenige, grobe Kampagnen. Zuordnung Kanal → Kampagne in 'campaigns'.",
+    "baseUrl": "https://apps.apple.com/app/apple-store/id6790972595",
+    "providerToken": "129172457",
+    "campaigns": {
+      "default": "website",
+      "chatgpt": "website_ai",
+      "ai_other": "website_ai"
+    }
+  },
+
+  "analytics": {
+    "_hinweis": "posthogKey leer = Analytics AUS (keine einzige Anfrage an PostHog). Erst eintragen, wenn die Datenschutzerklärung angepasst ist und in PostHog 'Cookieless server hash mode' aktiv ist.",
+    "provider": "posthog",
+    "posthogKey": "",
+    "posthogHost": "https://eu.i.posthog.com",
+    "posthogUiHost": "https://eu.posthog.com",
+    "posthogAssetHost": "https://eu-assets.i.posthog.com",
+    "posthogDefaults": "2026-08-30",
+    "cookielessMode": "always"
+  },
+
+  "verification": {
+    "_hinweis": "Optional. Empfohlen ist die Bestätigung per DNS-TXT-Eintrag bei IONOS (dann bleibt hier alles leer).",
+    "google": "",
+    "bing": ""
+  },
+
+  "social": [
+    {"name": "TikTok", "url": "https://www.tiktok.com/@footyagent.app"},
+    {"name": "Instagram", "url": "https://www.instagram.com/footyagent_app/"},
+    {"name": "X", "url": "https://x.com/footyagent_app"}
+  ]
+}

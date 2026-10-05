@@ -1,0 +1,283 @@
+{
+ "source": "Öffentliche App-Store-Versionshistorie (apps.apple.com, us/de), Stand 05.10.2026; 1.2.10 aus AppStore/was-ist-neu-1.2.10.md",
+ "releases": [
+  {
+   "version": "1.2.10",
+   "date": "2026-09-27",
+   "en": {
+    "title": null,
+    "notes": [
+     "Fixed a crash when opening a player page from an open sheet.",
+     "Small improvements under the hood."
+    ]
+   },
+   "de": {
+    "title": null,
+    "notes": [
+     "Ein Absturz beim Öffnen einer Spielerseite aus einem geöffneten Fenster ist behoben.",
+     "Kleine Verbesserungen unter der Haube."
+    ]
+   }
+  },
+  {
+   "version": "1.2.9",
+   "date": "2026-09-22",
+   "en": {
+    "title": null,
+    "notes": [
+     "Game stats as a switch: the question about anonymous usage data is no longer a pop-up. At the start and under Settings there is now a switch for it, off by default. It's still only about how the game is played, never about you.",
+     "Small improvements under the hood."
+    ]
+   },
+   "de": {
+    "title": null,
+    "notes": [
+     "Spielstatistiken als Schalter: Die Frage nach anonymen Nutzungsdaten ist kein Fenster mehr. Beim Start und unter Einstellungen gibt es dafür einen Schalter, standardmäßig aus. Es geht weiterhin nur darum, wie gespielt wird, nie um dich.",
+     "Kleine Verbesserungen unter der Haube."
+    ]
+   }
+  },
+  {
+   "version": "1.2.8",
+   "date": "2026-09-16",
+   "en": {
+    "title": null,
+    "notes": [
+     "New: amounts in your currency. Under Settings → Currency you can show everything in reais, dollars, pounds, lira, złoty, yen and more – at a fixed rate, display only.",
+     "Numbers now follow your language's format, and singular/plural is correct everywhere (\"1 client\", \"3 clients\").",
+     "Small fixes to labels and translations."
+    ]
+   },
+   "de": {
+    "title": null,
+    "notes": [
+     "Neu: Beträge in deiner Währung. Unter Einstellungen → Währung zeigst du alles in Real, Dollar, Pfund, Lira, Złoty, Yen und mehr – mit festem Kurs, nur zur Anzeige.",
+     "Zahlen erscheinen jetzt im Format deiner Sprache, und Einzahl/Mehrzahl stimmen überall (»1 Klient«, »3 Klienten«).",
+     "Kleine Korrekturen an Beschriftungen und Übersetzungen."
+    ]
+   }
+  },
+  {
+   "version": "1.2.7",
+   "date": "2026-09-13",
+   "en": {
+    "title": null,
+    "notes": [
+     "New in Finances: \"Revenue this season\" shows live what you've earned in the current season, broken down by source.",
+     "National cups are now named correctly in every language, e.g. \"Germany · Cup\".",
+     "More translation gaps closed: finances, licences, tutorial, negotiations, save slots."
+    ]
+   },
+   "de": {
+    "title": null,
+    "notes": [
+     "Neu in den Finanzen: »Umsatz diese Saison« zeigt live, was du in der laufenden Saison eingenommen hast – nach Quelle aufgeschlüsselt.",
+     "Nationalpokale heißen jetzt in jeder Sprache richtig, z. B. »Deutschland · Pokal«.",
+     "Weitere Übersetzungslücken geschlossen: Finanzen, Lizenzen, Tutorial, Verhandlungen, Speicherstände."
+    ]
+   }
+  },
+  {
+   "version": "1.2.6",
+   "date": "2026-09-11",
+   "en": {
+    "title": null,
+    "notes": [
+     "Translation fix: Help & FAQ, achievements, match reports and other texts show up in your language again."
+    ]
+   },
+   "de": {
+    "title": null,
+    "notes": [
+     "Übersetzungen repariert: Hilfe & FAQ, Erfolge, Spieltagsbericht und weitere Texte erscheinen wieder in deiner Sprache."
+    ]
+   }
+  },
+  {
+   "version": "1.2.5",
+   "date": "2026-09-10",
+   "en": {
+    "title": null,
+    "notes": [
+     "Technical improvements under the hood.",
+     "Groundwork for upcoming updates."
+    ]
+   },
+   "de": {
+    "title": null,
+    "notes": [
+     "Technische Verbesserungen im Hintergrund.",
+     "Vorbereitungen für kommende Updates."
+    ]
+   }
+  },
+  {
+   "version": "1.2.4",
+   "date": "2026-09-04",
+   "en": {
+    "title": null,
+    "notes": [
+     "League names now follow your language – “England · League 1” instead of “English League 1”",
+     "Big Stage: long competition names no longer cut off the round display"
+    ]
+   },
+   "de": {
+    "title": null,
+    "notes": [
+     "Liganamen folgen jetzt deiner Spielsprache – »Deutschland · Liga 1« statt »German League 1«",
+     "Große Bühne: lange Wettbewerbsnamen schneiden die Rundenanzeige nicht mehr ab"
+    ]
+   }
+  },
+  {
+   "version": "1.2.3",
+   "date": "2026-09-02",
+   "en": {
+    "title": null,
+    "notes": [
+     "Fairer economy: top commissions and dividends no longer grow without limits",
+     "Elite players must be earned – your license now matters when approaching them directly",
+     "Negotiation loophole closed: quitting and restarting no longer rerolls the outcome",
+     "Hundreds of texts now reliably follow your in-game language",
+     "New save, new agency – pick name and headquarters freely",
+     "Pro Pack: your agency name shines in gold",
+     "Reworked crests with a new crown",
+     "Official community links in Settings",
+     "The app tells you when an update is available",
+     "Many more translation fixes"
+    ]
+   },
+   "de": {
+    "title": null,
+    "notes": [
+     "Fairere Wirtschaft: Top-Provisionen und Dividenden wachsen nicht mehr grenzenlos",
+     "Elite-Spieler musst du dir verdienen – deine Lizenz zählt jetzt bei der Direktansprache",
+     "Verhandlungs-Schlupfloch geschlossen: Abbrechen und Neustarten würfelt nicht mehr neu",
+     "Hunderte Texte folgen jetzt zuverlässig deiner Spielsprache",
+     "Neuer Spielstand, neue Agentur – Name und Sitz frei wählbar",
+     "Pro-Paket: dein Agenturname erstrahlt in Gold",
+     "Überarbeitete Wappen mit neuer Krone",
+     "Offizielle Community-Links in den Einstellungen",
+     "Die App sagt dir, wenn ein Update bereitsteht",
+     "Viele weitere Übersetzungs-Korrekturen"
+    ]
+   }
+  },
+  {
+   "version": "1.2.2",
+   "date": "2026-08-28",
+   "en": {
+    "title": "Your save is safe now",
+    "notes": [
+     "Important fix: starting the app could overwrite a game in progress. Your run now survives every restart.",
+     "Much faster first launch: the game world is now built behind the loading screen instead of before it.",
+     "Simpler start: the game only asks for your agency's name now.",
+     "Newly explained: almost half your talents come from your headquarters' country – it now says so right at the picker.",
+     "One rule set for everyone: the choice between Normal and Hard is gone. If you played on Hard, you continue under the milder rules.",
+     "Moving into a new season is noticeably quicker."
+    ]
+   },
+   "de": {
+    "title": "Dein Spielstand ist jetzt sicher",
+    "notes": [
+     "Wichtiger Fehler behoben: Beim Start der App konnte ein laufender Spielstand überschrieben werden. Deine Partie übersteht jetzt jeden Neustart.",
+     "Deutlich schnellerer erster Start: Die Spielwelt entsteht jetzt hinter dem Ladebalken statt davor.",
+     "Einfacherer Einstieg: Beim ersten Start fragt das Spiel nur noch nach dem Namen deiner Agentur.",
+     "Neu erklärt: Fast die Hälfte deiner Talente stammt aus dem Land deines Hauptsitzes – das steht jetzt direkt bei der Auswahl.",
+     "Alle spielen nach denselben Regeln: Die Wahl zwischen Normal und Schwierig entfällt. Wer bisher »Schwierig« spielte, läuft mit den milderen Regeln weiter.",
+     "Der Wechsel in eine neue Saison geht deutlich schneller."
+    ]
+   }
+  },
+  {
+   "version": "1.2.1",
+   "date": "2026-08-25",
+   "en": {
+    "title": "Now on iPad, too!",
+    "notes": [
+     "FootyAgent is now a native iPad app – it uses the full screen, with bigger text and a better overview.",
+     "A real fixture list: round-robin with home and away legs. Fixtures are no longer drawn at random but planned fairly.",
+     "The club page now shows recent and upcoming matches – and how the club finished in past seasons.",
+     "After every update you can see at a glance, right in the app, what has changed.",
+     "Noticeably faster game start, especially on iOS 27.",
+     "The whole game runs smoother: advancing a week and playing a matchday now take a fraction of the time.",
+     "Many small fixes from the test round."
+    ]
+   },
+   "de": {
+    "title": "Jetzt auch auf dem iPad!",
+    "notes": [
+     "FootyAgent gibt es jetzt als native iPad-Version – die App nutzt die volle Fläche, mit größerer Schrift und mehr Übersicht.",
+     "Echter Spielplan: Jeder gegen jeden mit Hin- und Rückrunde. Die Paarungen werden nicht mehr ausgelost, sondern fair geplant.",
+     "Die Vereinsseite zeigt jetzt die letzten und die nächsten Spiele – und wie der Verein in vergangenen Saisons abgeschnitten hat.",
+     "Nach jedem Update siehst du direkt in der App auf einen Blick, was sich geändert hat.",
+     "Deutlich schnellerer Spielstart, besonders auf iOS 27.",
+     "Das ganze Spiel läuft flüssiger: Wochenwechsel und Spieltage brauchen nur noch einen Bruchteil der Zeit.",
+     "Viele Detail-Korrekturen aus der Testrunde."
+    ]
+   }
+  },
+  {
+   "version": "1.2",
+   "date": "2026-08-23",
+   "en": {
+    "title": "The big balance update!",
+    "notes": [
+     "The world's superstars are in the game from day one – but you can only sign them once your agency holds the Legends License and ranks among the world's top 10. A goal worth earning.",
+     "Placement bonus: getting a clubless client signed with his first team now pays off immediately.",
+     "Clubless players can be offered to clubs at any time – just like in real football, no waiting for the transfer window.",
+     "Player development is more believable: reaching full potential is now a real career journey.",
+     "The top agencies now truly represent the best players – the rankings are worth a look.",
+     "Injuries instantly show how many league games your client will miss. Contract talks explain why a star drives a hard bargain – and what your years together are worth.",
+     "Fewer repetitive events in your inbox, plus many small fixes.",
+     "New: send feedback right from the app – we read everything!"
+    ]
+   },
+   "de": {
+    "title": "Das große Balance-Update!",
+    "notes": [
+     "Die Weltstars sind jetzt von Spielbeginn an da – verpflichten kannst du sie erst, wenn deine Agentur mit Legenden-Lizenz zu den Top 10 der Welt gehört. Ein Ziel, das sich verdient anfühlt.",
+     "Vermittlungsprämie: Bringst du einen vereinslosen Klienten erstmals bei einem Verein unter, zahlt sich das ab sofort direkt aus.",
+     "Vereinslose Spieler kannst du jetzt jederzeit anbieten – wie im echten Fußball, ohne aufs Transferfenster zu warten.",
+     "Spieler entwickeln sich glaubwürdiger: Der Weg zum vollen Potenzial ist jetzt eine echte Karriere-Reise.",
+     "Die Top-Agenturen vertreten jetzt wirklich die besten Spieler – ein Blick in die Rangliste lohnt sich.",
+     "Verletzungen zeigen sofort, wie viele Ligaspiele dein Klient verpasst. Vertragsverhandlungen erklären, warum ein Star hart verhandelt – und was eure gemeinsamen Jahre wert sind.",
+     "Weniger Wiederholungen im Postfach, dazu viele Detail-Korrekturen.",
+     "Neu: Feedback direkt aus der App – wir lesen alles!"
+    ]
+   }
+  },
+  {
+   "version": "1.1.1",
+   "date": "2026-08-22",
+   "en": {
+    "title": "New: FootyAgent now also speaks Spanish, Portuguese (Brazil), French, Italian, Turkish and Polish – switch anytime in Settings.",
+    "notes": [
+     "Plus a lot of polish on the in-game texts and several detail fixes."
+    ]
+   },
+   "de": {
+    "title": "Neu: FootyAgent gibt es jetzt auch auf Spanisch, Portugiesisch (Brasilien), Französisch, Italienisch, Türkisch und Polnisch – umstellen kannst du jederzeit in den Einstellungen.",
+    "notes": [
+     "Dazu viel Feinschliff an den Texten und mehrere Korrekturen im Detail."
+    ]
+   }
+  },
+  {
+   "version": "1.1",
+   "date": "2026-08-17",
+   "en": {
+    "title": "Launch on the App Store",
+    "notes": [
+     "First public release of FootyAgent for iPhone."
+    ]
+   },
+   "de": {
+    "title": "Start im App Store",
+    "notes": [
+     "Erste öffentliche Version von FootyAgent fürs iPhone."
+    ]
+   }
+  }
+ ]
+}

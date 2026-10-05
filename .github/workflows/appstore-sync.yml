@@ -1,0 +1,17 @@
+# Wöchentlich: Stimmen Version, Datum und Größe auf der Website noch mit dem App Store überein?
+# Schlägt fehl (= E-Mail von GitHub), sobald ein Update live ist und die Website nachgezogen werden muss:
+#   python3 _src/sync_appstore.py --write && python3 _src/build.py
+name: App-Store-Abgleich
+on:
+  schedule:
+    - cron: "17 6 * * 1"   # montags 06:17 UTC
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Website-Fakten gegen App Store prüfen
+        run: python3 _src/sync_appstore.py

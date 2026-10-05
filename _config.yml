@@ -1,0 +1,9 @@
+# GitHub Pages (Jekyll) – hier stehen NUR Ausschlüsse.
+# Die Seiten selbst erzeugt _src/build.py (Ordner mit Unterstrich veröffentlicht Jekyll nie).
+# Interne Notizen und Doku gehören nicht auf die Website.
+exclude:
+  - ANLEITUNG.md
+  - UEBERGABE.md
+  - README.md
+  - docs
+  - .github
