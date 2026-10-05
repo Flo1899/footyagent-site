@@ -1,79 +1,60 @@
 # Übergabe: footyagent.app
 
-**Stand 21.08.2026.** Diese Datei richtet sich an alle, die künftig an der Website arbeiten —
-Menschen wie KI-Assistenten. Die technische Beschreibung der Seite selbst steht in
-[`ANLEITUNG.md`](ANLEITUNG.md); hier stehen die Spielregeln.
+**Stand 05.10.2026** (Umbau auf Generator, Intent-Seiten und Analytics; vorher 21.08.2026).
+Diese Datei richtet sich an alle, die an der Website arbeiten – Menschen wie KI-Assistenten.
+Wie die Seite gebaut ist und gepflegt wird, steht in [`ANLEITUNG.md`](ANLEITUNG.md); hier stehen die Spielregeln.
 
-## Dieses Repo ist ab sofort die einzige Quelle
+## Dieses Repo ist die einzige Quelle
 
-Bis heute lag die Website doppelt: hier und als Kopie im privaten Spiel-Repo unter
-`AppStore/website/`. Das ist beendet — im Spiel-Repo steht dort nur noch ein Verweis hierher.
-**Alle Änderungen passieren in diesem Repo.** Wer die alte Kopie bearbeitet, arbeitet ins Leere
-und riskiert, fremde Änderungen zu überschreiben.
+Seit 21.08.2026 liegt die Website nur noch hier (im Spiel-Repo unter `AppStore/website/` steht nur ein
+Verweis). Seit 05.10.2026 gilt zusätzlich: **Die Quelle ist `_src/`.** Die HTML-Dateien im Repo sind
+erzeugt – wer sie direkt bearbeitet, verliert die Änderung beim nächsten `python3 _src/build.py`, und die
+GitHub-Prüfung schlägt an. Einzige Ausnahme: `datenschutz/index.html` (von Hand gepflegt).
 
 ## Veröffentlichen
 
-Ein Push auf `main` **ist** die Veröffentlichung — GitHub Pages baut automatisch, nach etwa
-einer Minute ist es live. Es gibt keine Staging-Umgebung und keinen Build-Schritt.
-
-Danach prüfen:
-
-```bash
-curl -s "https://footyagent.app/?cb=$RANDOM" | grep -o '<body data-launch="[a-z]*">'
-```
-
-⚠️ **Fallstrick:** Nicht auf `data-launch="live"` allein prüfen. Diese Zeichenkette steht auch in
-den CSS-Regeln (`[data-launch="live"] .wenn-soon{…}`) und meldet sofort Erfolg, auch wenn das
-`<body>`-Tag noch auf `soon` steht. Immer das komplette Tag greppen. Der `cb`-Parameter umgeht
-den CDN-Cache; ohne ihn liefert GitHub Pages minutenlang gemischt alt und neu aus.
+Ein Merge/Push auf `main` **ist** die Veröffentlichung – GitHub Pages baut automatisch, nach etwa
+einer Minute ist es live. Deshalb: auf einem Branch arbeiten, Pull Request, grüner Haken der Prüfung,
+dann mergen. Live-Prüfung siehe `ANLEITUNG.md` (Build-Kennung vergleichen, `?cb=` gegen den CDN-Cache).
 
 ## Harte Regeln
 
-**`CNAME` niemals löschen oder ändern.** Inhalt ist `footyagent.app`. Ohne diese Datei fällt die
-Seite auf die github.io-Adresse zurück und die Domain zeigt ins Leere.
+**`CNAME` niemals löschen oder ändern.** Inhalt ist `footyagent.app`.
 
-**Keine externen Ressourcen einbauen.** Keine Google Fonts, kein CDN, keine Tracker, keine
-eingebetteten Videos. Das ist kein Geschmacksurteil: Externe Ressourcen übertragen IP-Adressen an
-Dritte und wären in Deutschland einwilligungspflichtig — die Seite käme ohne Cookie-Banner nicht
-mehr aus. Alles liegt lokal in `assets/`. **Ausnahme (vorbereitet, derzeit pausiert):** Das lokale
-Skript `assets/td.js` bleibt auf `/` und `/datenschutz/` eingebunden (kein CDN, keine Cookies),
-sendet aber nichts, bis Bob etwas anderes sagt. Keine TelemetryDeck-Sends. Flo setzt später
-selbst GA4 ein — hier keinen Tracker nachrüsten (kein CDN, kein Cookie-Banner, kein GA4-Snippet).
-Die Apple-Kampagne `?ct=website&mt=8` am Store-Link bleibt.
+**Zwei Pfade sind im App Store hinterlegt** (alle 9 Store-Sprachen, geprüft 05.10.2026) und dürfen nie
+verschwinden: `/` (Support- und Marketing-URL) und `/datenschutz/` (Datenschutz-URL).
 
-**DE und EN immer paarweise pflegen.** Die Seite schaltet über `<span class="de">` und
-`<span class="en">` um. Wer nur eine Sprache ändert, erzeugt eine Seite, die je nach Umschalter
-etwas anderes behauptet.
+**Fakten nur aus `_src/data/product.json`** – und dort nur, was die **herunterladbare** Store-Version wirklich
+kann. Keine angekündigten Funktionen, keine erfundenen Bewertungen, Downloadzahlen, Pressezitate oder
+»bestes Spiel«-Behauptungen. Keine Bewertungen im JSON-LD.
 
-**Zwei Seiten sind im App Store hinterlegt** und dürfen ihre Pfade nicht verlieren:
-`/` ist die Support-URL, `/datenschutz/` die Datenschutz-URL. Umbenennen bricht die Store-Einträge.
+**Keine externen Ressourcen** (keine Google Fonts, kein CDN, keine eingebetteten Videos, keine Social-Widgets).
+Externe Ressourcen übertragen IP-Adressen an Dritte und wären in Deutschland einwilligungspflichtig.
+**Einzige Ausnahme: PostHog** (Florians Entscheidung vom 05.10.2026) – EU-Cloud, `cookieless_mode: 'always'`,
+lädt nur, wenn in `product.json` ein Schlüssel steht. Den Schlüssel erst eintragen, wenn
+(1) die Datenschutzerklärung PostHog nennt und (2) in PostHog »Cookieless server hash mode« aktiv ist.
+Keine weiteren Tracker, kein zweites Analytics-System, kein Cookie-Banner nachrüsten. Details: `docs/analytics.md`.
 
-## Was hier NICHT liegt
+**App-Store-Links nur über den Baustein `{{cta:…}}`.** Er setzt Kampagne (`pt`/`ct`) und Messung. Wo Dritte
+den Link weiterverwenden (JSON-LD, `llms.txt`, Presse), steht der neutrale Link ohne Kampagne.
 
-Die App selbst (privates Repo, kein Zugriff nötig), die Store-Texte (die pflegt App Store Connect)
-und alles rund um Apple-Konto und Einreichungen. Wer hier arbeitet, braucht nichts davon.
+**Sprachen:** EN ist die Hauptsprache (`/`), DE hat eigene Seiten unter `/de/`. Inhalte eines Sprachpaars
+gemeinsam pflegen (`pair:` im Kopfblock). Keine automatisch übersetzten Massen-Seiten.
+
+**Datenschutztext nicht eigenmächtig ändern** – rechtliche Texte formuliert Florian bzw. seine Beratung.
 
 ## Offene Punkte
 
-**1. Sprach-Chip — erledigt (1.1.1 live).** In `index.html` steht in der Merkmalliste
-»8 Sprachen« bzw. »8 languages«. Version 1.1.1 ist seit 2026-08-22 im App Store und bringt
-DE, EN, ES, pt-BR, FR, IT, TR, PL. **Niemals Sprachen versprechen, die der aktuell
-herunterladbare Store-Build nicht hat.** Den Chip nur anpassen, wenn die herunterladbare
-Store-Version andere Sprachen hat.
-
-**2. Impressums-Adresse — Entscheidung des Betreibers.** `datenschutz/index.html` nennt die
-c/o-Anschrift eines Anbieters für Geschäftsadressen (Welserstraße 3, Dietmannsried). Im App Store
-steht seit dem 21.08.2026 als Händleranschrift die Privatadresse. Zwei öffentliche Stellen, zwei
-Adressen. Ob das so bleiben soll, entscheidet der Betreiber — **nicht eigenmächtig ändern**, hier
-hängen rechtliche Fragen dran.
-
-**3. Optional: offizielles Apple-Badge.** Der Download-Knopf ist eine Eigengestaltung mit
-Apple-Logo. Apples Markenrichtlinien sehen das offizielle »Download on the App Store«-Badge vor.
-Details stehen in `ANLEITUNG.md`.
+1. **Datenschutzerklärung für PostHog ergänzen** – `MANUAL PRIVACY POLICY UPDATE REQUIRED`
+   (welche Daten, siehe `docs/analytics.md` §8). Bis dahin bleibt der Schlüssel leer = keine Messung.
+2. **Impressums-Adresse – Entscheidung des Betreibers.** `datenschutz/index.html` nennt eine c/o-Geschäftsadresse,
+   der App Store die Privatadresse. Nicht eigenmächtig ändern.
+3. **Optional: offizielles Apple-Badge.** Der Download-Knopf ist eine Eigengestaltung mit Apple-Logo;
+   Apples Richtlinien sehen das offizielle »Download on the App Store«-Badge vor
+   (<https://developer.apple.com/app-store/marketing/guidelines/>). Wer tauscht: Inhalt in `cta()` (`build.py`) ersetzen.
 
 ## Zugriff
 
-Wer hier schreiben darf, sollte **ausschließlich** auf dieses Repo Rechte haben — entweder als
-Collaborator mit Write-Rolle oder über ein Fine-grained Token, das nur `footyagent-site` kennt
-(Contents: Read and write) und ein Ablaufdatum hat. Zugriff auf das private Spiel-Repo oder auf
-Apple-Konten wird für die Website nicht gebraucht und sollte nicht erteilt werden.
+Wer hier schreiben darf, sollte **ausschließlich** auf dieses Repo Rechte haben – Collaborator mit Write-Rolle
+oder ein Fine-grained Token nur für `footyagent-site` (Contents: Read and write) mit Ablaufdatum. Zugriff auf das
+private Spiel-Repo, Apple-Konten oder PostHog wird für Textänderungen nicht gebraucht.
