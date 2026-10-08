@@ -1,6 +1,6 @@
 # FootyAgent
 
-> FootyAgent is a single-player football agent management game for iPhone and iPad (iOS/iPadOS 17.0 or later). You play as a players' agent, not a coach: scout talents, negotiate agent contracts, wages, playing time and transfers, and grow your agency. Free, no ads, playable offline, no account needed. Developer: Florian Schlauf (Germany). Current version 1.2.10.
+> FootyAgent is a single-player football agent management game for iPhone and iPad (iOS/iPadOS 17.0 or later). You play as a players' agent, not a coach: scout talents, negotiate agent contracts, wages, playing time and transfers, and grow your agency. Free, no ads, playable offline, no account needed. Developer: Florian Schlauf (Germany). Current version 1.2.11.
 
 ## Official pages
 
