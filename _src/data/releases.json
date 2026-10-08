@@ -2,6 +2,26 @@
  "source": "Öffentliche App-Store-Versionshistorie (apps.apple.com, us/de), Stand 05.10.2026; 1.2.10 aus AppStore/was-ist-neu-1.2.10.md",
  "releases": [
   {
+   "version": "1.2.11",
+   "date": "2026-10-06",
+   "en": {
+    "title": null,
+    "notes": [
+     "An old benefactor now also gives you seed money for a fresh start when you're stuck in debt – once you have no assets or club shares left.",
+     "Support codes are now verified on our server using your Game Center account.",
+     "Small improvements under the hood."
+    ]
+   },
+   "de": {
+    "title": null,
+    "notes": [
+     "Ein alter Gönner hilft dir aus der Schuldenfalle jetzt auch mit Startgeld für einen Neuanfang – sobald du keine Anlagen oder Vereinsanteile mehr hast.",
+     "Support-Codes werden jetzt mit deinem Game-Center-Konto auf unserem Server geprüft.",
+     "Kleine Verbesserungen unter der Haube."
+    ]
+   }
+  },
+  {
    "version": "1.2.10",
    "date": "2026-09-27",
    "en": {
