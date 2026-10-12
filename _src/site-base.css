@@ -207,7 +207,8 @@ footer{border-top:1px solid rgba(130,160,220,.14);margin-top:20px;padding:30px 0
   .hero .lead,.merkmale{margin-inline:auto}
   .hero .lead{max-width:38ch}
   .cta-reihe,.merkmale{justify-content:center}
-  .hero-phone{margin-top:18px}
+  /* Container so breit wie das Handy: die schwebenden Wappen sitzen dann am Gerät, nicht am Seitenrand */
+  .hero-phone{margin-top:18px;width:min(300px,74vw);margin-inline:auto}
   .akzent{width:64px}.akzent.zwei{width:52px}
   .fakten{grid-template-columns:repeat(2,1fr)}
   .fakt:last-child{grid-column:1/-1}
