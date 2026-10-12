@@ -367,11 +367,17 @@ footer{border-top:1px solid rgba(130,160,220,.14);background:rgba(5,10,16,.5)}
   <p><span class="de"><strong>Wofür:</strong> Wir betreiben damit die Weltrangliste. Der Server prüft die Werte
     automatisch auf Plausibilität (zum Beispiel unmöglich schnelle Sprünge) und markiert Auffälligkeiten; gewertet
     werden nur Werte von einem geprüften Gerät. Für die Spielbalance werten wir die Zahlen zusammengefasst aus,
-    etwa in welcher Saison Spieler bestimmte Stufen erreichen. An Dritte geben wir die Daten nicht weiter.</span>
+    etwa in welcher Saison Spieler bestimmte Stufen erreichen. Damit ein einzelnes Konto den Dienst nicht überlasten
+    kann, zählt der Server je Game-Center-Konto und Tag, wie viele Karrieren neu angelegt und wie viele Saisons
+    gemeldet werden; ist das Tageskontingent erreicht, nimmt er weitere erst am nächsten Tag an. An Dritte geben wir
+    die Daten nicht weiter.</span>
     <span class="en"><strong>Purpose:</strong> We use the data to run the World Ranking. The server automatically
     checks the figures for plausibility (for example impossibly fast jumps) and flags anything unusual; only
     figures from a verified device are ranked. For the game balance, we analyse the figures in aggregated form,
-    for example in which season players reach certain levels. We do not pass the data on to third parties.</span></p>
+    for example in which season players reach certain levels. So that a single account cannot overload the
+    service, the server counts per Game Center account and day how many careers are created and how many seasons are
+    reported; once the daily quota is reached, it only accepts further ones the next day. We do not pass the data on
+    to third parties.</span></p>
   <p><span class="de"><strong>Rechtsgrundlage:</strong> Die Weltrangliste ist ein Dienst, den du mit „Mit
     Weltrangliste spielen“ ausdrücklich wählst. Die dafür nötige Übermittlung einschließlich des Schutzes vor
     Manipulation beruht auf § 25 Abs. 2 Nr. 2 TDDDG und Art. 6 Abs. 1 lit. b DSGVO (Bereitstellung des
@@ -391,7 +397,9 @@ footer{border-top:1px solid rgba(130,160,220,.14);background:rgba(5,10,16,.5)}
     Wappen werden gelöscht, deine Game-Center-Kennung wird durch einen Zufallswert ersetzt und die Geräteschlüssel
     werden entfernt; die Einträge bleiben als „Ehemalige Agentur“ ohne Namen und ohne Game-Center-Bezug in der
     Liste. Meldungen von Namen löschen wir nach 12 Monaten. Eine Prüfsumme von Apples Anmeldenachweis und die
-    Einmalwerte, die vor wiederholt eingespielten Anfragen schützen, löschen wir nach einem Tag. Zu IP-Adresse,
+    Einmalwerte, die vor wiederholt eingespielten Anfragen schützen, löschen wir nach einem Tag. Die Tageszähler
+    stehen unter einer nicht umkehrbaren, mit einem geheimen Schlüssel gebildeten Prüfsumme deiner
+    Game-Center-Kennung und werden nach zwei Tagen gelöscht. Zu IP-Adresse,
     Protokollen und Sicherungskopien siehe § 11.</span>
     <span class="en"><strong>Retention:</strong> We keep the data for as long as you play the career in the World
     Ranking and the World Ranking exists – even if you do not play for a while. Of the standings sent during a
@@ -401,7 +409,8 @@ footer{border-top:1px solid rgba(130,160,220,.14);background:rgba(5,10,16,.5)}
     deleted, your Game Center identifier is replaced with a random value and the device keys are removed; the
     entries remain in the list as “Former agency” without a name and without any link to Game Center. Name reports
     are deleted after 12 months. A checksum of Apple’s sign-in proof and the one-time values that protect against
-    replayed requests are deleted after one day. For IP addresses, logs and backups see § 11.</span></p>
+    replayed requests are deleted after one day. The daily counters are stored under a non-reversible checksum of
+    your Game Center ID formed with a secret key and are deleted after two days. For IP addresses, logs and backups see § 11.</span></p>
   <p><span class="de"><strong>Aus der Weltrangliste nehmen:</strong> In den Einstellungen der App kannst du eine
     Karriere jederzeit aus der Weltrangliste nehmen. Dann löscht der Server alle übermittelten Werte dieser
     Karriere sowie ihren Namen, ihr Land und ihr Wappen; andere Karrieren mit Weltrangliste bleiben bestehen. Hat
@@ -493,12 +502,13 @@ footer{border-top:1px solid rgba(130,160,220,.14);background:rgba(5,10,16,.5)}
   <p><span class="de"><strong>Speicherdauer:</strong> Kennzahlen und Karriere-Daten speichern wir, bis du die
     Übermittlung abschaltest oder wir die Auswertung einstellen. Meldet dein Game-Center-Konto 24 Monate lang
     keine Saison mehr, anonymisieren wir die Einträge wie oben beschrieben. Eine Prüfsumme von Apples Anmeldenachweis und die
-    Einmalwerte, die vor wiederholt eingespielten Anfragen schützen, löschen wir nach einem Tag. Zu
+    Einmalwerte, die vor wiederholt eingespielten Anfragen schützen, löschen wir nach einem Tag; für die Tageszähler
+    gilt § 9. Zu
     IP-Adresse, Protokollen und Sicherungskopien siehe § 11.</span>
     <span class="en"><strong>Retention:</strong> We keep the key figures and career data until you turn
     sharing off or we stop the analysis. If your Game Center account does not report a season for 24 months,
     we anonymise the entries as described above. A checksum of Apple’s sign-in proof and the one-time values that protect
-    against replayed requests are deleted after one day. For IP addresses, logs and backups see § 11.</span></p>
+    against replayed requests are deleted after one day; for the daily counters see § 9. For IP addresses, logs and backups see § 11.</span></p>
   <p><span class="de"><strong>Abschalten und Löschen:</strong> Schaltest du „Meine Werte übermitteln“ ab,
     löscht der Server alle bisher übermittelten Kennzahlen aller Karrieren deines Game-Center-Kontos sowie die
     Geräteschlüssel und ersetzt deine Game-Center-Kennung durch einen Zufallswert. Bist du gerade offline,
