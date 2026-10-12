@@ -125,8 +125,6 @@ h1 .zeile2{display:block;background:linear-gradient(96deg,var(--aktion),var(--ne
 /* Schwebendes Wappen als Akzent am Hero-Gerät */
 .akzent{position:absolute;right:-4%;top:9%;width:92px;height:auto;z-index:2;
   filter:drop-shadow(0 14px 28px rgba(0,0,0,.6));
-  -webkit-mask-image:radial-gradient(circle at 50% 46%,#000 58%,transparent 72%);
-  mask-image:radial-gradient(circle at 50% 46%,#000 58%,transparent 72%);
   animation:schweben 7s ease-in-out infinite}
 .akzent.zwei{right:auto;left:-5%;top:auto;bottom:14%;width:74px;animation-delay:-3.5s}
 @keyframes schweben{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-13px) rotate(4deg)}}
