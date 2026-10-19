@@ -49,7 +49,7 @@
       "leagues": 26,
       "clubs": 480,
       "achievements": 51,
-      "crests": 24,
+      "crests": 23,
       "starterCrests": 6,
       "agencies": 100,
       "agencyTiers": 6,
@@ -68,7 +68,7 @@
       "playingRoles": 4,
       "officeClients": [3, 4, 5, 6, 7, 8, 9, 11, 13, 15]
     },
-    "_quellen_numbers": "Leagues.swift (17 Länder, 26 Ligen, 480 Städte-Vereine), Erfolg.swift (51), Wappen.swift (24), Prestige.swift (6), Lizenz.swift (4 Stufen, 3 Spezialisierungen), GameState.swift (bueroMaxLevel 10, bueroKlientenStufen 3…15, 100 Agenturen), Mitarbeiter.swift (6), VereinsStrategie.swift (4), SaveManager.swift (3 Slots, ab Slot 2 Pro), bueroKlientenStufen (officeClients), Spielzeitrolle.swift (4), Spielübersicht 11.09. (18 Vorfall-Arten, 52 Wochen, 5 Scouting-Stufen)"
+    "_quellen_numbers": "Leagues.swift (17 Länder, 26 Ligen, 480 Städte-Vereine), Erfolg.swift (51), Wappen.swift (23), Prestige.swift (6), Lizenz.swift (4 Stufen, 3 Spezialisierungen), GameState.swift (bueroMaxLevel 10, bueroKlientenStufen 3…15, 100 Agenturen), Mitarbeiter.swift (6), VereinsStrategie.swift (4), SaveManager.swift (3 Slots, ab Slot 2 Pro), bueroKlientenStufen (officeClients), Spielzeitrolle.swift (4), Spielübersicht 11.09. (18 Vorfall-Arten, 52 Wochen, 5 Scouting-Stufen)"
   },
 
   "terms": {
