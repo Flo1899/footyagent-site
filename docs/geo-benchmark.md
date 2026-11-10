@@ -201,6 +201,95 @@ ChatGPT greift bei App-Fragen aber direkt auf App-Store-Einträge zurück.
 
 Nicht geprüft in diesem Lauf: Search Console / Bing Webmaster Tools (AI Performance) – braucht Florians Anmeldung.
 
+#### Lauf 3 – 4 Wochen nach Deploy, 06.11.2026 (ChatGPT)
+
+**Bedingungen:** geplante Aufgabe, gleiche 14 Fragen wie Lauf 1/2, dazu #1, #22 und #26 je **dreimal** (jeweils neuer
+Chat) – zusammen 20 Antworten. ChatGPT **ohne Anmeldung**, nicht notwendige Cookies abgelehnt, Oberfläche Deutsch,
+Websuche automatisch. Standort per IP **Thailand** (wie Lauf 2). Abweichung: Der eingebaute Browser der Desktop-App wurde
+wegen eines alten Arbeitsbereich-Cookies auf die Anmeldeseite umgeleitet; gemessen wurde deshalb in einem **frischen,
+leeren Chrome-Profil** (gesteuert über das DevTools-Protokoll). Quellen wurden aus den Links der Antwort gelesen, Bilder
+aus ihren Beschriftungen (alt/aria-label).
+
+**Ergebnis in Zahlen**
+
+- Intent-Fragen (11): FootyAgent **0×** genannt (Lauf 1: 1×, Lauf 2: 0×).
+- **Dreifach-Stichprobe:** #1 FootyAgent **0 von 3**, #22 **0 von 3**, #26 **0 von 3**. Die Lücke ist damit kein
+  Zufall einer einzelnen Stichprobe.
+- Marken-Fragen (3): #35 und #36 **sachlich korrekt** (Entwickler Florian Schlauf, iPhone/iPad, kostenlos mit
+  In-App-Kauf, Pro-Paket 5,99 € laut deutschem App Store, kein Android, Scouts/Analysten/Anwälte, Vereinsanteile bis
+  zum Präsidentenamt). **Neu: Die englische Markenfrage führt mit einem falschen Treffer** – ein angeblicher
+  »FootyAgent – AI football organiser« auf Devpost (der verlinkte Devpost-Eintrag heißt in Wirklichkeit »FootyApp«), dazu
+  ein unpassender Sky-News-Artikel. Das Spiel kommt erst als zweite Bedeutung, dort aber korrekt. Marke: **2/3 korrekt,
+  1/3 teilweise falsch** (Lauf 1 und 2: 3/3).
+- **footyagent.app zitiert: 0 von 20** (Ziel »mindestens 1×« wieder verfehlt). Quelle für FootyAgent war nur der App
+  Store (#35, #36, EN).
+- **Falsche Bilder weiter da:** #35 zeigt ein App-Store-Bild von *Superstar Football Agent*, die englische Markenfrage
+  ein Bild von *Pro Football Agent* (Steam).
+- Namensvettern: »Football Agent« (Steam/Android/iOS) in **5 von 14** Antworten (Lauf 2: 10), Steam ausdrücklich in 3
+  (Lauf 2: 5). Dafür ist jetzt *The Agent* (Ordinary Genius Software) dazugekommen (#2, #3, #21).
+- #22 versteht »Fußball-Berater-Spiel« in 2 von 3 Antworten als **Vereinsmanager-Spiel** (Football Manager 26 Mobile,
+  OSM, Top Eleven, Soccer Manager 2027, Be the Manager 2026); nur 22a nennt einen Agenten-Titel (Superstar Football Agent).
+- #1 ordnet wieder nach App-Store-Bewertungen: Superstar Football Agent (~6.200) bzw. Soccer Agent (~1.300) vorn.
+- #13 löst keine Spieleempfehlung mehr aus: ChatGPT startet ein eigenes Text-Rollenspiel (»SUPER AGENT: Career Mode«).
+
+**Gegenprobe Bing** (06.11., ohne Anmeldung, im eingebauten Browser): deutlich besser als Lauf 2.
+»FootyAgent football agent game« (US) → **Platz 1** (Lauf 2: Platz 2; dahinter Steam-»Football Agent«, Platz 3 der
+YouTube-Kanal @FootyAgent). »Fußball Spielerberater Spiel iPhone« (DE) → **Platz 1 (/de/) und Platz 2 (Startseite)**
+(Lauf 2: Platz 2). »best football agent game for iPhone« (US) → **nicht in den Top 7** (dort: appshunter.io-Themenseiten,
+ioshacker, App-Store-Einträge von Pro Football Agent und Superstar Football Agent, apkpure, softonic).
+
+**Google Search Console** (sc-domain:footyagent.app, Zeitraum 04.10.–03.11.2026): 9 Klicks, 93 Impressionen, CTR 9,7 %,
+mittlere Position 3,2; Suchanfragen u. a. »footy agent« (2 Impr.), »football agent game« (1). **Indexierung: nur 1 Seite
+indexiert, 19 nicht** – 16 »Gefunden – zurzeit nicht indexiert«, 3 »Seite mit Weiterleitung«.
+Bing Webmaster Tools (AI Performance): nicht geprüft, in Chrome nicht angemeldet.
+
+| Date | Prompt # | Platform | FootyAgent mentioned? | Position/context | Website cited? | App Store cited? | Competitors mentioned | Reason FootyAgent was/was not relevant | Notes |
+|---|---|---|---|---|---|---|---|---|---|
+| 2026-11-06 | 1 (a) | CGPT-S | nein | – | nein | nein (nur Konkurrenz) | Superstar Football Agent (Top, 4,6★/~6.200), Soccer Agent, Football Agent Simulator | Auswahl nach Bewertungen | Quellen App Store, appshunter, mwm.ai |
+| 2026-11-06 | 1 (b) | CGPT-S | nein | – | nein | nein | Superstar Football Agent, Soccer Agent, Football Agent Simulator | wie 1a | appbrain, appshunter |
+| 2026-11-06 | 1 (c) | CGPT-S | nein | – | nein | nein | Soccer Agent: Football Game (Top), Superstar Football Agent, Football Agent (iOS, 0,99 $) | wie 1a | |
+| 2026-11-06 | 2 | CGPT-S | nein | – | nein | nein | Football Agent (Steam), The Agent, Football Agency Simulator, Football Agent Simulator (Android), The Agent (Browser) | Steam-Spiel zuerst | Steam, Google Play, fctoolshub |
+| 2026-11-06 | 3 | CGPT-S | nein | – | nein | nein | Football Agent (Android, Empfehlung), The Agent, Football Agent (Steam), Agent Trouble: Football | wie #2 | |
+| 2026-11-06 | 5 | CGPT | nein | – | nein | nein | Football Manager, EA Sports FC, Soccer Manager | »Transfers/Verträge« = Manager-Spiele | keine Quellen-Links, nur Bilder |
+| 2026-11-06 | 8 | CGPT-S | nein | – | nein | nein | Football Manager 26, Gridiron Manager 2026 | deutet Frage als FM | |
+| 2026-11-06 | 9 | CGPT | nein | – | nein | nein | Football Agent, Football Manager | keine Suche | |
+| 2026-11-06 | 13 | CGPT-S | nein | – | nein | nein | – | startet eigenes Text-Rollenspiel | Quelle fifa.qtech.hr |
+| 2026-11-06 | 18 | CGPT-S | nein | – | nein | nein | FM26 Mobile, Soccer Manager 2027, OSM, Football Club Owner | Manager-Spiele | AppTierList +3 |
+| 2026-11-06 | 21 | CGPT-S | nein | – | nein | nein | Football Agent (Steam, Empfehlung), The Agent, Football Agency Simulator | wie #2 | |
+| 2026-11-06 | 22 (a) | CGPT-S | nein | – | nein | nein | Superstar Football Agent, FM26 Mobile, Top Eleven, OSM | gemischte Liste | AppTierList +2 |
+| 2026-11-06 | 22 (b) | CGPT-S | nein | – | nein | nein | FM26 Mobile, OSM, Top Eleven, Soccer Manager 2027, Be the Manager 2026 | »Berater« als Vereinsmanager verstanden | App Store +3 |
+| 2026-11-06 | 22 (c) | CGPT-S | nein | – | nein | nein | wie 22b | wie 22b; bietet Suche nach »echtem Agenten-Spiel« an | |
+| 2026-11-06 | 26 (a) | CGPT-S | nein | – | nein | nein | Football Manager 2026, EA FC 26, Football Academy Manager | Manager-Spiele | |
+| 2026-11-06 | 26 (b) | CGPT-S | nein | – | nein | nein | Football Manager 26, EA FC 26, Gridiron Manager 2026 | wie 26a | |
+| 2026-11-06 | 26 (c) | CGPT-S | nein | – | nein | nein | Football Manager 26, Football Agent, EA FC 26 | Agenten-Spiel nur als Namensvetter | |
+| 2026-11-06 | 35 | CGPT-S | **ja** | korrekt, Entwickler, Mitarbeiter, Vereinsanteile | nein | **ja** | – | Markenfrage | Bild: Superstar Football Agent (falsch) |
+| 2026-11-06 | 36 | CGPT-S | **ja** | kostenlos + Pro 5,99 €, kein Android – korrekt | nein | **ja** (de) | Football Agent (Android) als Alternative | Markenfrage | |
+| 2026-11-06 | (EN) What is FootyAgent? | CGPT-S | **ja** | erst 2. Bedeutung; zuerst falscher »AI football organiser« (Devpost) | nein | **ja** | – | Markenfrage | Bild: Pro Football Agent (Steam); Devpost-Link gehört zu »FootyApp« |
+
+**Was daraus folgt (Vergleich Lauf 1 → 2 → 3)**
+
+| | Lauf 1 (06.10.) | Lauf 2 (21.10.) | Lauf 3 (06.11.) |
+|---|---|---|---|
+| Intent-Fragen mit FootyAgent | 1/11 | 0/11 | 0/11 (Dreifach: #1 0/3, #22 0/3, #26 0/3) |
+| Marke korrekt | 3/3 | 3/3 | 2/3 (EN mit falschem Erst-Treffer) |
+| footyagent.app zitiert | 0/14 | 0/14 | 0/20 |
+| Bing »FootyAgent football agent game« | – | Platz 2 | Platz 1 |
+| Bing »Fußball Spielerberater Spiel iPhone« | – | Platz 2 | Platz 1 + 2 |
+| Bing »best football agent game for iPhone« | – | nicht Top 10 | nicht Top 7 |
+
+1. **Bing-Ranking wächst, ChatGPT-Zitate bleiben bei null.** Für App-Fragen zieht ChatGPT App-Store-Einträge und
+   Listenseiten (appshunter, AppTierList, mwm.ai, appbrain) heran, nicht Entwickler-Websites.
+2. **Google indexiert fast nichts** (1 von 20 Seiten). Das ist die größte technische Baustelle: Sitemap in der Search
+   Console neu einreichen und die wichtigsten Seiten (z. B. /de/fussball-berater-spiel/) per URL-Prüfung zur
+   Indexierung anmelden; interne Links auf diese Seiten verstärken.
+3. **Drittquellen fehlen.** Wer in appshunter-/AppTierList-/mwm.ai-Listen oder bei TouchArcade/Pocket Gamer steht,
+   wird genannt. Ein Eintrag dort (oder ein Presse-Pitch) ist der wahrscheinlichste Weg in #1/#22.
+4. **Markenschutz:** Auf der Website und im Store den Satz »FootyAgent is a football agent game for iPhone and iPad«
+   wörtlich und früh platzieren, damit die englische Markenfrage nicht auf fremde Projekte (Devpost »FootyApp«) ausweicht.
+5. Dreifach-Stichprobe beibehalten.
+
+Nicht geprüft: Bing Webmaster Tools (AI Performance) – Chrome nicht angemeldet.
+
 ## Einordnen
 
 - **Nennung ohne Website-Zitat** → die KI kennt FootyAgent aus Store/Drittseiten; Seiten sind evtl. noch nicht im Suchindex
